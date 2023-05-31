@@ -14,9 +14,5 @@ namespace Customer.Common.Entities
 
         [MaxLength(150)]
         public string Email { get; set; }
-
-        public bool Active { get; set; }
-
-        public ICollection<User> Users { get; set; }
     }
 }

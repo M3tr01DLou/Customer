@@ -1,0 +1,75 @@
+﻿@page "/aditionalComments"
+@inject IRepository repository
+@inject ISessionStorageService sessionStorage
+
+<h3>AditionalComments</h3>
+
+@code {
+    private string _id_replanteo;
+    private string _site;
+    private string _usuario;
+    private string _operador;
+    private string _idOperador;
+    private string _empresa;
+    private string _organizacion;
+    private bool _administradorEmpresa;
+    private string _proyecto;
+    private string _pais;
+    private string _seccion;
+
+    private string _id_usuario;
+    private InitialRequest initialRequest;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _id_replanteo = await sessionStorage.GetItemAsStringAsync("AteneaId");
+        _site = await sessionStorage.GetItemAsStringAsync("AteneaSite");
+        _usuario = await sessionStorage.GetItemAsStringAsync("AteneaUsuario");
+        _operador = await sessionStorage.GetItemAsStringAsync("AteneaOperador");
+        _idOperador = await sessionStorage.GetItemAsStringAsync("AteneaIdOperador");
+        _empresa = await sessionStorage.GetItemAsStringAsync("AteneaEmpresa");
+        _organizacion = await sessionStorage.GetItemAsStringAsync("AteneaOrganizacion");
+        _administradorEmpresa = bool.Parse(await sessionStorage.GetItemAsStringAsync("AteneaAdministradorEmpresa"));
+        _proyecto = await sessionStorage.GetItemAsStringAsync("AteneaProyecto");
+        _pais = await sessionStorage.GetItemAsStringAsync("AteneaPais");
+        _seccion = await sessionStorage.GetItemAsStringAsync("AteneaSeccion");
+
+        //Check init
+        initialRequest = new InitialRequest
+            {
+                Administrator = _administradorEmpresa.ToString(),
+                Company = _empresa,
+                OperatorId = _idOperador,
+                VersionId = _id_replanteo,
+                Operator = _operador,
+                Organization = _organizacion,
+                Country = _pais,
+                Project = _proyecto,
+                Section = _seccion,
+                Site = _site,
+                User = _usuario
+            };
+
+        await CheckInitialAsync();
+    }
+
+    private async Task CheckInitialAsync()
+    {
+        try
+        {
+            var responseHttp = await repository.Post<InitialRequest, User>("/api/core/InitialChecks", initialRequest);
+            if (responseHttp.Error)
+            {
+                var message = await responseHttp.GetErrorMessageAsync();
+                return;
+            }
+
+            _id_usuario = responseHttp.Response.Id.ToString();
+            await sessionStorage.SetItemAsStringAsync("IdUsuarioMateriales", _id_usuario);
+        }
+        catch (Exception ex)
+        {
+
+        }
+    }
+}

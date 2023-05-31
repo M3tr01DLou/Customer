@@ -1,9 +1,247 @@
 ﻿@page "/"
+@inject ITokenServices tokenServices
+@inject IApiServices apiServices
+@inject IConfiguration configuration
+@inject ISessionStorageService sessionStorage
+@inject NavigationManager navigationManager
 
-<PageTitle>Index</PageTitle>
+@code{
 
-<h1>Hello, world!</h1>
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public int Version { get; set; }
 
-Welcome to your new app.
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string Site { get; set; }
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string Operator { get; set; }
+
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string Activity { get; set; }
+
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string Proyect { get; set; }
+
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string Country { get; set; }
+
+    [Parameter]
+    [SupplyParameterFromQuery]
+    public string Auth { get; set; }
+
+    private string _ateneaId;
+    private string _ateneaSite;
+    private string _ateneaOperador;
+    private string _ateneaSeccion;
+    private string _ateneaProyecto;
+    private string _ateneaPais;
+    private string _ateneaToken;
+    private string _ateneaUsuario;
+    private string _ateneaEmpresa;
+    private string _ateneaOrganizacion;
+    private bool _ateneaAdministradorEmpresa;
+    private string _response;
+    private string _operatorId;
+    private string _idPermiso;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (string.IsNullOrEmpty(Version.ToString()) || string.IsNullOrEmpty(Site) || string.IsNullOrEmpty(Operator) || string.IsNullOrEmpty(Activity) || string.IsNullOrEmpty(Proyect) || string.IsNullOrEmpty(Country) || string.IsNullOrEmpty(Auth))
+        {
+            //navigationManager.NavigateTo("/error/params");
+            return;
+        }
+
+        _ateneaId = Version.ToString();
+        _ateneaSite = Site;
+        _ateneaOperador = Operator;
+        _ateneaSeccion = Activity;
+        _ateneaProyecto = Proyect;
+        _ateneaPais = Country;
+        _ateneaToken = tokenServices.VerifySignatureAndRefresh(Auth);
+
+        _response = await apiServices.GetJsonAsync(configuration["EnvironmentVariables:API_OPERATOR"].ToString(), _ateneaToken);
+        if (string.IsNullOrEmpty(_response))
+        {
+            //navigationManager.NavigateTo("/error/operator");
+            return;
+        }
+
+        await sessionStorage.SetItemAsStringAsync("AteneaToken", _ateneaToken);
+        await sessionStorage.SetItemAsStringAsync("AteneaPais", _ateneaPais);
+        await sessionStorage.SetItemAsStringAsync("AteneaProyecto", _ateneaProyecto);
+        await sessionStorage.SetItemAsStringAsync("AteneaSeccion", _ateneaSeccion);
+        await sessionStorage.SetItemAsStringAsync("AteneaOperador", _ateneaOperador);
+        await sessionStorage.SetItemAsStringAsync("AteneaSite", _ateneaSite);
+        await sessionStorage.SetItemAsStringAsync("AteneaId", _ateneaId);
+
+        await SetAteneaIdOperadorAsync(_response);
+        JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+        JwtSecurityToken jwtToken = (JwtSecurityToken)tokenHandler.ReadToken(_ateneaToken);
+        await SetAteneaUsuarioAsync(jwtToken);
+        await SetAteneaEmpresaAsync(jwtToken);
+        await SetAteneaOrganizacionAsync(jwtToken);
+        await SetAteneaAdministradorEmpresaAsync(jwtToken);
+        await SetIdPermisoAsync();
+
+        if (_ateneaId != "" && _ateneaSite != "" && _ateneaUsuario != "" && _ateneaOperador != "" && _ateneaEmpresa != "" && _ateneaAdministradorEmpresa.ToString() != ""
+                && _ateneaProyecto != "" && _ateneaPais != "" && _ateneaSeccion != ""
+                && (_idPermiso != Constants.PERMISSION_READ.ToString() || _idPermiso != Constants.PERMISSION_WRITE.ToString())
+            )
+        {
+            if (_ateneaSeccion == "reportajeFotografico")
+            {
+                navigationManager.NavigateTo("/reportajeFotografico");
+                return;
+            }
+            else if (_ateneaSeccion == "reportajeFotograficoInstall")
+            {
+                navigationManager.NavigateTo("/reportajeFotograficoInstall");
+                return;
+            }
+            else if (_ateneaSeccion == "reportajePlanoInstall")
+            {
+                navigationManager.NavigateTo("/reportajeFotograficoPlanosInstall");
+                return;
+            }
+            else if (_ateneaSeccion == "riesgosLaborales")
+            {
+                navigationManager.NavigateTo("/riesgosLaborales");
+                return;
+            }
+            else if (_ateneaSeccion == "actuacionCaseta")
+            {
+                navigationManager.NavigateTo("/aditionalComments");
+                return;
+            }
+            else if (_ateneaSeccion == "croquis")
+            {
+                navigationManager.NavigateTo("/croquis");
+                return;
+            }
+            else if (_ateneaSeccion == "pruebasInstalacion")
+            {
+                navigationManager.NavigateTo("/pruebasInstalacion");
+                return;
+            }
+        }
+    }
+
+    private async Task SetAteneaIdOperadorAsync(string response)
+    {
+        List<AteneaOperator> operadorAtenea = JsonConvert.DeserializeObject<List<AteneaOperator>>(_response);
+        for (int i = 0; i < operadorAtenea.Count; i++)
+        {
+            if (operadorAtenea[i].Name.ToLower() == Operator.ToLower())
+            {
+                _operatorId = operadorAtenea[i].Id.ToString();
+                await sessionStorage.SetItemAsStringAsync("AteneaIdOperador", _operatorId);
+                break;
+            }
+        }
+    }
+
+    private async Task SetAteneaUsuarioAsync(JwtSecurityToken jwtSecurityToken)
+    {
+        _ateneaUsuario = jwtSecurityToken.Claims.FirstOrDefault(c => c.Type == "unique_name").Value;
+        await sessionStorage.SetItemAsStringAsync("AteneaUsuario", _ateneaUsuario);
+    }
+
+    private async Task SetAteneaEmpresaAsync(JwtSecurityToken jwtSecurityToken)
+    {
+        _ateneaEmpresa = jwtSecurityToken.Claims.FirstOrDefault(c => c.Type == "companyName").Value;
+        await sessionStorage.SetItemAsStringAsync("AteneaEmpresa", _ateneaEmpresa);
+    }
+
+    private async Task SetAteneaOrganizacionAsync(JwtSecurityToken jwtSecurityToken)
+    {
+        try
+        {
+            _ateneaOrganizacion = jwtSecurityToken.Claims.FirstOrDefault(c => c.Type == "department").Value;
+        }
+        catch (Exception)
+        {
+            _ateneaOrganizacion = string.Empty;
+        }
+        await sessionStorage.SetItemAsStringAsync("AteneaOrganizacion", _ateneaOrganizacion);
+    }
+
+    private async Task SetAteneaAdministradorEmpresaAsync(JwtSecurityToken jwtSecurityToken)
+    {
+        try
+        {
+            _ateneaAdministradorEmpresa = false;
+            List<Claim> listaRoles = jwtSecurityToken.Claims.Where(c => c.Type == "authorities").ToList();
+            if (listaRoles.Count > 0)
+            {
+                for (int i = 0; i < listaRoles.Count; i++)
+                {
+                    if (listaRoles[i].Value.ToUpper() == "ROLE_ADMIN" || listaRoles[i].Value.ToUpper() == "ROLE_GLOBAL_ADMIN")
+                    {
+                        _ateneaAdministradorEmpresa = true;
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                _ateneaAdministradorEmpresa = false;
+            }
+        }
+        catch (Exception)
+        {
+            _ateneaAdministradorEmpresa = false;
+        }
+        await sessionStorage.SetItemAsStringAsync("AteneaAdministradorEmpresa", _ateneaAdministradorEmpresa.ToString());
+    }
+
+    private async Task SetIdPermisoAsync()
+    {
+        try
+        {
+            //Obtener id permiso (1 -> non access(no debe darse), 2 -> lectura, 3 -> escritura)
+            string p1 = (_ateneaOrganizacion != string.Empty ? _ateneaOrganizacion : _ateneaEmpresa).ToString();
+            string p2 = _ateneaOperador;
+            string p3 = _ateneaProyecto;
+            string p4 = _ateneaSeccion;
+
+            p1 = HttpUtility.UrlEncode(p1, Encoding.UTF8);
+            p2 = HttpUtility.UrlEncode(p2, Encoding.UTF8);
+            p3 = HttpUtility.UrlEncode(p3, Encoding.UTF8);
+            p4 = HttpUtility.UrlEncode(p4, Encoding.UTF8);
+
+            p1 = Constants.PERMISSION_PARAM_COMPANYIDAD + p1;
+            p2 = Constants.PERMISSION_PARAM_OPERATORNAME + p2;
+            p3 = Constants.PERMISSION_PARAM_PROJECTNAME + p3;
+            p4 = Constants.PERMISSION_PARAM_TOOLSNAME + p4;
+
+            string urlbase = string.Format(configuration["EnvironmentVariables:API_PERMISSIONS"].ToString(), p1, p2, p3, p4);
+
+            string responsePermiso = await apiServices.GetJsonAsync(urlbase, _ateneaToken);
+
+            if (responsePermiso == Constants.PERMISSION_WRITE.ToString())
+            {
+                _idPermiso = Constants.PERMISSION_WRITE.ToString();
+            }
+            else if (responsePermiso == Constants.PERMISSION_READ.ToString())
+            {
+                _idPermiso = Constants.PERMISSION_READ.ToString();
+            }
+            else
+            {
+                _idPermiso = Constants.PERMISSION_WRITE.ToString();
+            }
+        }
+        catch
+        {
+            _idPermiso = Constants.PERMISSION_READ.ToString();
+        }
+        await sessionStorage.SetItemAsStringAsync("IdPermiso", _idPermiso);
+    }
+}
