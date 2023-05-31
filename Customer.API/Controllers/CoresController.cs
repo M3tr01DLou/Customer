@@ -118,9 +118,11 @@ namespace Customer.API.Controllers
                     design.State = await _dataContext.States.FirstOrDefaultAsync(s => s.Status == "On Going");
                     await _dataContext.SaveChangesAsync();
                 }
+
+                return Ok(design);
             }
 
-            return Ok(await _dataContext.Users.FirstOrDefaultAsync(u => u.Login == initialRequest.User));
+            return BadRequest();
         }
 
     }

@@ -57,19 +57,26 @@
     {
         try
         {
-            var responseHttp = await repository.Post<InitialRequest, User>("/api/core/InitialChecks", initialRequest);
+            var responseHttp = await repository.Post<InitialRequest, DesignAC>("/api/core/InitialChecks", initialRequest);
             if (responseHttp.Error)
             {
                 var message = await responseHttp.GetErrorMessageAsync();
                 return;
             }
 
-            _id_usuario = responseHttp.Response.Id.ToString();
+            _id_usuario = responseHttp.Response.User.Id.ToString();
             await sessionStorage.SetItemAsStringAsync("IdUsuarioMateriales", _id_usuario);
+
+            await LoadAditionalCommentsAsync(responseHttp.Response.Id);
         }
         catch (Exception ex)
         {
 
         }
+    }
+
+    private async Task LoadAditionalCommentsAsync(int id)
+    {
+        var responseHTTP = await repository.Get<DesignACDTO>($"/api/designac/{id}");
     }
 }
