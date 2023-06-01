@@ -28,6 +28,7 @@ namespace Customer.API.Controllers
             };
 
             var designACSiteType = await _context.DesignACSiteTypes
+                .Include(d => d.DesignAC)
                 .Include(st => st.Station)
                 .Include(s => s.Stand)
                 .Include(so => so.SiteOwner)
@@ -35,10 +36,10 @@ namespace Customer.API.Controllers
                 .Where(d => d.DesignAC.Id == id).FirstOrDefaultAsync();
             if (designACSiteType != null)
             {
-                designACDTO.DesignACSiteTypeDTO.SiteOwnerId = designACSiteType.SiteOwner.Id;
-                designACDTO.DesignACSiteTypeDTO.StationId = designACSiteType.Station.Id;
-                designACDTO.DesignACSiteTypeDTO.StandId = designACSiteType.Stand.Id;
-                designACDTO.DesignACSiteTypeDTO.OutdoorInstallationId = designACSiteType.OutdoorInstallation.Id;
+                designACDTO.DesignACSiteTypeDTO.SiteOwnerId = designACSiteType.SiteOwner?.Id;
+                designACDTO.DesignACSiteTypeDTO.StationId = designACSiteType.Station?.Id;
+                designACDTO.DesignACSiteTypeDTO.StandId = designACSiteType.Stand?.Id;
+                designACDTO.DesignACSiteTypeDTO.OutdoorInstallationId = designACSiteType.OutdoorInstallation?.Id;
                 designACDTO.DesignACSiteTypeDTO.SharedLocationNotShared = designACSiteType.SharedLocationNotShared;
                 designACDTO.DesignACSiteTypeDTO.SharedLocationVodafone = designACSiteType.SharedLocationVodafone;
                 designACDTO.DesignACSiteTypeDTO.SharedLocationOrange = designACSiteType.SharedLocationOrange;
@@ -54,6 +55,7 @@ namespace Customer.API.Controllers
             designACDTO.DesignACSiteTypeDTO.TypeOutdoorInstallations = await _context.TypeOutdoorInstallations.ToListAsync();
 
             designACDTO.DesignACRadioSummaryDTO = await _context.DesignACRadioSummaries!
+                .Include(d => d.DesignAC)
                 .Where(d => d.DesignAC.Id == id)
                 .Select(rs => new DesignACRadioSummaryDTO {
                     Technology = rs.Technology,

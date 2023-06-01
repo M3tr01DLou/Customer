@@ -89,35 +89,45 @@ namespace Customer.API.Controllers
             if (initialRequest.Section == "actuacionCaseta")
             {
                 var design = await _dataContext.DesignACs
+                    .Include(u => u.User)
+                    .Include(o => o.Operator)
+                    .Include(p => p.Project)
+                    .Include(c => c.Country)
                     .Include(s => s.State)
                     .FirstOrDefaultAsync(d => d.VersionId.ToString() == initialRequest.VersionId);
                 if (design == null)
                 {
-                    _dataContext.Add(new DesignAC
-                    {
+                    design = new DesignAC {
                         VersionId = int.Parse(initialRequest.VersionId),
                         Site = initialRequest.Site,
                         User = await _dataContext.Users.FirstOrDefaultAsync(u => u.Login == initialRequest.User),
                         Operator = await _dataContext.Operators.FirstOrDefaultAsync(o => o.Name == initialRequest.Operator && o.OperatorId.ToString() == initialRequest.OperatorId),
                         Project = await _dataContext.Projects.FirstOrDefaultAsync(p => p.Name == initialRequest.Project),
                         Country = await _dataContext.Countries.FirstOrDefaultAsync(c => c.Name == initialRequest.Country),
-                    }); ;
+                        State = await _dataContext.States.FirstOrDefaultAsync(s => s.Status == "On Going"),
+                    };
+                    _dataContext.Add(design);
+                    await _dataContext.SaveChangesAsync();
+
+                    DesignACSiteType designACSiteType = new() { DesignAC = design };
+                    _dataContext.Add(designACSiteType);
+                    await _dataContext.SaveChangesAsync();
                 }
                 else
                 {
                     design.User = await _dataContext.Users.FirstOrDefaultAsync(u => u.Login == initialRequest.User);
                     _dataContext.Update(design);
-                }
-                await _dataContext.SaveChangesAsync();
-
-                design = await _dataContext.DesignACs
-                    .Include(s => s.State)
-                    .FirstOrDefaultAsync(d => d.VersionId.ToString() == initialRequest.VersionId);
-                if (design.State == null)
-                {
-                    design.State = await _dataContext.States.FirstOrDefaultAsync(s => s.Status == "On Going");
                     await _dataContext.SaveChangesAsync();
                 }
+
+                //design = await _dataContext.DesignACs
+                //    .Include(s => s.State)
+                //    .FirstOrDefaultAsync(d => d.VersionId.ToString() == initialRequest.VersionId);
+                //if (design.State == null)
+                //{
+                //    design.State = await _dataContext.States.FirstOrDefaultAsync(s => s.Status == "On Going");
+                //    await _dataContext.SaveChangesAsync();
+                //}
 
                 return Ok(design);
             }

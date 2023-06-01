@@ -9,19 +9,19 @@ namespace Customer.Common.DTOs
 {
     public class DesignACSiteTypeDTO
     {
-        public int StationId { get; set; }
+        public int? StationId { get; set; }
 
         public List<TypeStation> TypeStations { get; set; }
 
-        public int StandId { get; set; }
+        public int? StandId { get; set; }
 
         public List<TypeStand> TypeStands { get; set; }
 
-        public int OutdoorInstallationId { get; set; }
+        public int? OutdoorInstallationId { get; set; }
 
         public List<TypeOutdoorInstallation> TypeOutdoorInstallations { get; set; }
 
-        public int SiteOwnerId { get; set; }
+        public int? SiteOwnerId { get; set; }
 
         public List<TypeSiteOwner> TypeSiteOwners { get; set; }
 
