@@ -23,63 +23,44 @@ namespace Customer.API.Controllers
             var asp = await _dataContext.Asps.FirstOrDefaultAsync(a => a.Name == initialRequest.Company);
             if (asp == null)
             {
-                _dataContext.Add(new Asp
-                {
-                    Name = initialRequest.Company,
-                    GenericUserGestDoc = "asp_instalacion",
-                });
+                asp = new Asp { Name = initialRequest.Company, GenericUserGestDoc = "asp_instalacion" };
+                _dataContext.Add(asp);
                 await _dataContext.SaveChangesAsync();
             }
 
             var country = await _dataContext.Countries.FirstOrDefaultAsync(c => c.Name == initialRequest.Country);
             if (country == null)
             {
-                _dataContext.Add(new Country
-                {
-                    Name = initialRequest.Country,
-                    Active = true,
-                });
+                country = new Country { Name = initialRequest.Country, Active = true };
+                _dataContext.Add(country);
                 await _dataContext.SaveChangesAsync();
             }
 
             var project = await _dataContext.Projects.FirstOrDefaultAsync(p => p.Name == initialRequest.Project);
             if (project == null)
             {
-                _dataContext.Add(new Project
-                {
-                    Name = initialRequest.Project,
-                    Active = true,
-                });
+                project = new Project { Name = initialRequest.Project, Active = true };
+                _dataContext.Add(project);
                 await _dataContext.SaveChangesAsync();
             }
 
             var operador = await _dataContext.Operators.FirstOrDefaultAsync(o => o.Name == initialRequest.Operator && o.OperatorId.ToString() == initialRequest.OperatorId);
             if (operador == null)
             {
-                _dataContext.Add(new Operator
-                {
-                    OperatorId = int.Parse(initialRequest.OperatorId),
-                    Name = initialRequest.Operator,
-                    Active = true,
-                });
+                operador = new Operator { OperatorId = int.Parse(initialRequest.OperatorId), Name = initialRequest.Operator, Active = true };
+                _dataContext.Add(operador);
                 await _dataContext.SaveChangesAsync();
             }
 
             var user = await _dataContext.Users.FirstOrDefaultAsync(u => u.Login == initialRequest.User);
             if (user == null)
             {
-                _dataContext.Add(new User
-                {
-                    Name = initialRequest.User,
-                    Login = initialRequest.User,
-                    Asp = await _dataContext.Asps.FirstOrDefaultAsync(a => a.Name == initialRequest.Company),
-                    Organization = initialRequest.Organization,
-                    Administrator = bool.Parse(initialRequest.Administrator)
-                });
+                user = new User { Name = initialRequest.User, Login = initialRequest.User, Asp = asp, Organization = initialRequest.Organization, Administrator = bool.Parse(initialRequest.Administrator) };
+                _dataContext.Add(user);
             }
             else
             {
-                user.Asp = await _dataContext.Asps.FirstOrDefaultAsync(a => a.Name == initialRequest.Company);
+                user.Asp = asp;
                 user.Organization = initialRequest.Organization;
                 user.Administrator = bool.Parse(initialRequest.Administrator);
                 _dataContext.Update(user);
@@ -100,10 +81,10 @@ namespace Customer.API.Controllers
                     design = new DesignAC {
                         VersionId = int.Parse(initialRequest.VersionId),
                         Site = initialRequest.Site,
-                        User = await _dataContext.Users.FirstOrDefaultAsync(u => u.Login == initialRequest.User),
-                        Operator = await _dataContext.Operators.FirstOrDefaultAsync(o => o.Name == initialRequest.Operator && o.OperatorId.ToString() == initialRequest.OperatorId),
-                        Project = await _dataContext.Projects.FirstOrDefaultAsync(p => p.Name == initialRequest.Project),
-                        Country = await _dataContext.Countries.FirstOrDefaultAsync(c => c.Name == initialRequest.Country),
+                        User = user,
+                        Operator = operador,
+                        Project = project,
+                        Country =country,
                         State = await _dataContext.States.FirstOrDefaultAsync(s => s.Status == "On Going"),
                     };
                     _dataContext.Add(design);
@@ -115,7 +96,7 @@ namespace Customer.API.Controllers
                 }
                 else
                 {
-                    design.User = await _dataContext.Users.FirstOrDefaultAsync(u => u.Login == initialRequest.User);
+                    design.User = user;
                     _dataContext.Update(design);
                     await _dataContext.SaveChangesAsync();
                 }

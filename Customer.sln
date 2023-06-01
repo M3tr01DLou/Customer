@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33723.286
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Customer.API", "Customer.API\Customer.API.csproj", "{D2C724EB-2888-435A-B263-3732A1331455}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Customer.API", "Customer.API\Customer.API.csproj", "{D2C724EB-2888-435A-B263-3732A1331455}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Customer.Common", "Customer.Common\Customer.Common.csproj", "{9567E0EA-D666-42A1-9987-78E08ED466CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Customer.Common", "Customer.Common\Customer.Common.csproj", "{9567E0EA-D666-42A1-9987-78E08ED466CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Customer.WEB", "Customer.WEB\Customer.WEB.csproj", "{71178C7C-1941-48F0-A0BB-67C039D4040E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Customer.WEB", "Customer.WEB\Customer.WEB.csproj", "{71178C7C-1941-48F0-A0BB-67C039D4040E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

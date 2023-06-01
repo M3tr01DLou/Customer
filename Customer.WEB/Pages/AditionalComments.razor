@@ -2,9 +2,27 @@
 @inject IRepository repository
 @inject ISessionStorageService sessionStorage
 
-<h3>AditionalComments</h3>
+@if (IsLoading)
+{
+    <div style="background: rgba(255, 255, 255, 0.4);z-index:1000;width:100%;min-height:100%;background-position :50% 50%;position:fixed;">
+        <div class="spinner"></div>
+    </div>
+}
 
-<EditForm Model="@designACDTO">
+<EditForm Model="@designACDTO" OnValidSubmit="SaveChangesAsync">
+
+    <nav class="ml-2 mt-4">
+        <div class="d-flex text-center">
+            <div class="pl-0 mt-1"><strong>Comentarios adicionales</strong></div>
+            <button type="button" class="ml-2 btn primary">Guardar</button>
+            <button type="button" class="ml-2 btn primary">Copiar</button>
+            <button type="button" class="ml-2 btn primary">Cerrar</button>
+            <button type="button" class="ml-2 btn primary">Abrir</button>
+            <button type="button" class="ml-2 btn primary">Administracion</button>
+            <button type="button" class="ml-2 btn primary">RCA Codificador</button>
+        </div>
+    </nav>
+    <br />
 
     <div class="card card-custom card-compact">
         <div class="card-title">
@@ -49,6 +67,131 @@
                     <label for="radioPosition">Propietario del emplazamiento</label>
                 </div>
             </div>
+            <div class="content-form form-row">
+                <div class="col-1">
+                    <InputCheckbox @bind-Value="designACDTO.DesignACSiteTypeDTO.SharedLocationNotShared" class="form-check-input"></InputCheckbox>
+                    <label class="form-check-label">
+                        No compartido
+                    </label>
+                </div>
+                <div class="col-1">
+                    <InputCheckbox @bind-Value="designACDTO.DesignACSiteTypeDTO.SharedLocationVodafone" class="form-check-input"></InputCheckbox>
+                    <label class="form-check-label">
+                        Vodafone
+                    </label>
+                </div>
+                <div class="col-1">
+                    <InputCheckbox @bind-Value="designACDTO.DesignACSiteTypeDTO.SharedLocationOrange" class="form-check-input"></InputCheckbox>
+                    <label class="form-check-label">
+                        Orange
+                    </label>
+                </div>
+                <div class="col-1">
+                    <InputCheckbox @bind-Value="designACDTO.DesignACSiteTypeDTO.SharedLocationTelxius" class="form-check-input"></InputCheckbox>
+                    <label class="form-check-label">
+                        Telxius
+                    </label>
+                </div>
+                <div class="col-1">
+                    <InputCheckbox @bind-Value="designACDTO.DesignACSiteTypeDTO.SharedLocationYoigo" class="form-check-input"></InputCheckbox>
+                    <label class="form-check-label">
+                        Yoigo
+                    </label>
+                </div>
+                <div class="col-1">
+                    <InputCheckbox @bind-Value="designACDTO.DesignACSiteTypeDTO.SharedLocationAdif" class="form-check-input"></InputCheckbox>
+                    <label class="form-check-label">
+                        Adif
+                    </label>
+                </div>
+                <div class="col-1">
+                    <InputCheckbox @bind-Value="designACDTO.DesignACSiteTypeDTO.SharedLocationCellnex" class="form-check-input"></InputCheckbox>
+                    <label class="form-check-label">
+                        Cellnex
+                    </label>
+                </div>
+                <div class="col-1">
+                    <InputCheckbox @bind-Value="designACDTO.DesignACSiteTypeDTO.SharedLocationOthers" class="form-check-input"></InputCheckbox>
+                    <label class="form-check-label">
+                        Otros
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+
+    <div class="card card-custom card-compact">
+        <div class="card-title">
+            <div class="col-md-8 pl-0">Radio Summary</div>
+        </div>
+        <div class="card-content">
+            <div class="content-form form-row">
+                <div class="tabs">
+                    <div class="tab-button-outer">
+                        <ul class="nav nav-tabs" role="tablist" id="myTab">
+                            <li role="presentation" class="active nav-item"><a href="#tabL800" aria-controls="tabL800" role="tab" data-toggle="tab" class="nav-link">LTE 800</a></li>
+                            <li role="presentation" class="nav-item"><a href="#tabG900" aria-controls="tabG900" role="tab" data-toggle="tab" class="nav-link">GSM 900</a></li>
+                            <li role="presentation" class="nav-item"><a href="#tabU900" aria-controls="tabU900" role="tab" data-toggle="tab" class="nav-link">UMTS 900</a></li>
+                            <li role="presentation" class="nav-item"><a href="#tabL900" aria-controls="tabL900" role="tab" data-toggle="tab" class="nav-link">LTE 900</a></li>
+                            <li role="presentation" class="nav-item"><a href="#tabG1800" aria-controls="tabG1800" role="tab" data-toggle="tab" class="nav-link">GSM 1800</a></li>
+                            <li role="presentation" class="nav-item"><a href="#tabL1800" aria-controls="tabL1800" role="tab" data-toggle="tab" class="nav-link">LTE 1800</a></li>
+                            <li role="presentation" class="nav-item"><a href="#tabU2100" aria-controls="tabU2100" role="tab" data-toggle="tab" class="nav-link">UMTS 2100</a></li>
+                            <li role="presentation" class="nav-item"><a href="#tabL2100" aria-controls="tabL2100" role="tab" data-toggle="tab" class="nav-link">LTE 2100</a></li>
+                            <li role="presentation" class="nav-item"><a href="#tabL2600" aria-controls="tabL2600" role="tab" data-toggle="tab" class="nav-link">LTE 2600</a></li>
+                            <li role="presentation" class="nav-item"><a href="#tabL3500" aria-controls="tabL3500" role="tab" data-toggle="tab" class="nav-link">LTE 3500</a></li>
+                            <li role="presentation" class="nav-item"><a href="#tabNR3600" aria-controls="tabNR3600" role="tab" data-toggle="tab" class="nav-link">NR 3600</a></li>
+                            <li role="presentation" class="nav-item"><a href="#tabESS700" aria-controls="tabESS700" role="tab" data-toggle="tab" class="nav-link">ESS 700</a></li>
+                        </ul>
+                    </div>
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="tabL800">
+                            <div class="containerResumen">
+                                <div class="form-group row">
+                                    <div class="col-md-2">
+                                        <span>Comentarios</span>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <InputText id="level" name="level" type="text" @bind-Value="SelectedYear" class="form-control" />
+                                        <label for="level">Level (meters)</label>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-2">
+                                        <span>Necesita</span>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <InputText id="level1" name="level" type="text" @bind-Value="SelectedYear" class="form-control" />
+                                        <label for="level">Level (meters)</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane" id="tabG900">
+                            <div class="containerResumen">
+                                <div class="form-group row">
+                                    <div class="col-md-2">
+                                        <span>Comentarios g900</span>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <InputText id="level3" name="level3" type="text" @bind-Value="SelectedYear" class="form-control" />
+                                        <label for="level">Level (meters)</label>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-2">
+                                        <span>Necesita g900</span>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <InputText id="level31" name="level31" type="text" @bind-Value="SelectedYear" class="form-control" />
+                                        <label for="level">Level (meters)</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -71,6 +214,8 @@
     private InitialRequest initialRequest;
 
     public DesignACDTO designACDTO = new DesignACDTO();
+    public bool IsLoading;
+    private string SelectedYear { get; set; } = "2018";
 
     protected override async Task OnInitializedAsync()
     {
@@ -109,10 +254,14 @@
     {
         try
         {
+            IsLoading = true;
+            StateHasChanged();
             var responseHttp = await repository.Post<InitialRequest, DesignAC>("/api/core/InitialChecks", initialRequest);
             if (responseHttp.Error)
             {
                 var message = await responseHttp.GetErrorMessageAsync();
+                IsLoading = false;
+                StateHasChanged();
                 return;
             }
 
@@ -121,9 +270,11 @@
 
             await LoadAditionalCommentsAsync(responseHttp.Response.Id);
         }
-        catch (Exception ex)
+        catch (Exception ex) { }
+        finally
         {
-
+            IsLoading = false;
+            StateHasChanged();
         }
     }
 
@@ -137,5 +288,10 @@
         }
 
         designACDTO = responseHTTP.Response!;
+    }
+
+    private void SaveChangesAsync()
+    {
+        
     }
 }

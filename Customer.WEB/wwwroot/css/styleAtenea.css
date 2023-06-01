@@ -24250,13 +24250,13 @@ input[type=text]::-ms-clear {
     .light .btn.primary {
         color: #fff;
         background-color: #1174e6;
-        border: 1px solid #1174e6
+        border: 1px solid #1174e6;
     }
 
         .light .btn.primary:hover:not(:disabled) {
             color: #fff;
             background-color: #4d97ed;
-            border: 1px solid #4d97ed
+            border: 1px solid #4d97ed;
         }
 
         .light .btn.primary:active:not(:disabled) {
@@ -24269,13 +24269,13 @@ input[type=text]::-ms-clear {
     .light .btn.warning {
         color: #fff;
         background-color: #ed0e00;
-        border: 1px solid #ed0e00
+        border: 1px solid #ed0e00;
     }
 
         .light .btn.warning:hover:not(:disabled) {
             color: #fff;
             background-color: #ef3126;
-            border: 1px solid #ef3126
+            border: 1px solid #ef3126;
         }
 
         .light .btn.warning:active:not(:disabled) {
@@ -38614,3 +38614,26 @@ input[type="checkbox"] {
     padding-bottom: 5px;
     padding-top: 10px;
 }*/
+
+
+.spinner {
+    border: 16px solid silver;
+    border-top: 16px solid #337AB7;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    animation: spin 700ms linear infinite;
+    top: 40%;
+    left: 46%;
+    position: absolute;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg)
+    }
+
+    100% {
+        transform: rotate(360deg)
+    }
+}
