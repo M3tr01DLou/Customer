@@ -4,6 +4,56 @@
 
 <h3>AditionalComments</h3>
 
+<EditForm Model="@designACDTO">
+
+    <div class="card card-custom card-compact">
+        <div class="card-title">
+            <div class="col-md-8 pl-0">Tipo de emplazamiento</div>
+        </div>
+        <div class="card-content">
+            <div class="content-form form-row">
+                <div class="col-3 form-group has-float-label">
+                    <InputSelect @bind-Value="designACDTO.DesignACSiteTypeDTO.StationId" Id="designACDTO.DesignACSiteTypeDTO.StationId" class="form-control">
+                        @foreach (var item in designACDTO.DesignACSiteTypeDTO.TypeStations)
+                        {
+                            <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACSiteTypeDTO.StationId)">@item.Name</option>
+                        }
+                    </InputSelect>
+                    <label for="radioPosition">Estación</label>
+                </div>
+                <div class="col-3 form-group has-float-label">
+                    <InputSelect @bind-Value="designACDTO.DesignACSiteTypeDTO.StandId" Id="designACDTO.DesignACSiteTypeDTO.StandId" class="form-control">
+                        @foreach (var item in designACDTO.DesignACSiteTypeDTO.TypeStands)
+                        {
+                            <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACSiteTypeDTO.StandId)">@item.Name</option>
+                        }
+                    </InputSelect>
+                    <label for="radioPosition">Tipo de caseta</label>
+                </div>
+                <div class="col-3 form-group has-float-label">
+                    <InputSelect @bind-Value="designACDTO.DesignACSiteTypeDTO.OutdoorInstallationId" Id="designACDTO.DesignACSiteTypeDTO.OutdoorInstallationId" class="form-control">
+                        @foreach (var item in designACDTO.DesignACSiteTypeDTO.TypeOutdoorInstallations)
+                        {
+                            <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACSiteTypeDTO.OutdoorInstallationId)">@item.Name</option>
+                        }
+                    </InputSelect>
+                    <label for="radioPosition">Tipo de instalación</label>
+                </div>
+                <div class="col-3 form-group has-float-label">
+                    <InputSelect @bind-Value="designACDTO.DesignACSiteTypeDTO.SiteOwnerId" Id="designACDTO.DesignACSiteTypeDTO.SiteOwnerId" class="form-control">
+                        @foreach (var item in designACDTO.DesignACSiteTypeDTO.TypeSiteOwners)
+                        {
+                            <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACSiteTypeDTO.SiteOwnerId)">@item.Name</option>
+                        }
+                    </InputSelect>
+                    <label for="radioPosition">Propietario del emplazamiento</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</EditForm>
+
 @code {
     private string _id_replanteo;
     private string _site;
@@ -19,6 +69,8 @@
 
     private string _id_usuario;
     private InitialRequest initialRequest;
+
+    public DesignACDTO designACDTO = new DesignACDTO();
 
     protected override async Task OnInitializedAsync()
     {
@@ -78,5 +130,12 @@
     private async Task LoadAditionalCommentsAsync(int id)
     {
         var responseHTTP = await repository.Get<DesignACDTO>($"/api/designac/{id}");
+        if (responseHTTP.Error)
+        {
+            var message = await responseHTTP.GetErrorMessageAsync();
+            return;
+        }
+
+        designACDTO = responseHTTP.Response!;
     }
 }
