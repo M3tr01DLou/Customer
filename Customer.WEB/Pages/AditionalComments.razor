@@ -129,23 +129,23 @@
             <div class="content-form form-row">
                 <div class="tabs col-12">
                     <div class="tab-button-outer">
-                        <ul class="nav nav-tabs" role="tablist" id="myTab">
-                            <li role="presentation" class="nav-item col-1"><a aria-controls="tabL800" role="tab" data-toggle="tab" class="nav-link text-center @(_activeRSL800 ? "active" : "")" @onclick=@(() => SelectTab("L800"))>LTE 800</a></li>
-                            <li role="presentation" class="nav-item col-1"><a aria-controls="tabG900" role="tab" data-toggle="tab" class="nav-link text-center @(_activeRSG900 ? "active" : "")" @onclick=@(() => SelectTab("G900"))>GSM 900</a></li>
-                            <li role="presentation" class="nav-item col-1"><a aria-controls="tabU900" role="tab" data-toggle="tab" class="nav-link text-center @(_activeRSU900 ? "active" : "")" @onclick=@(() => SelectTab("U900"))>UMTS 900</a></li>
-                            <li role="presentation" class="nav-item col-1"><a aria-controls="tabL900" role="tab" data-toggle="tab" class="nav-link text-center @(_activeRSL900 ? "active" : "")" @onclick=@(() => SelectTab("L900"))>LTE 900</a></li>
-                            <li role="presentation" class="nav-item col-1"><a aria-controls="tabG1800" role="tab" data-toggle="tab" class="nav-link text-center @(_activeRSG1800 ? "active" : "")" @onclick=@(() => SelectTab("G1800"))>GSM 1800</a></li>
-                            <li role="presentation" class="nav-item col-1"><a aria-controls="tabL1800" role="tab" data-toggle="tab" class="nav-link text-center @(_activeRSL1800 ? "active" : "")" @onclick=@(() => SelectTab("L1800"))>LTE 1800</a></li>
-                            <li role="presentation" class="nav-item col-1"><a aria-controls="tabU2100" role="tab" data-toggle="tab" class="nav-link text-center @(_activeRSU2100 ? "active" : "")" @onclick=@(() => SelectTab("U2100"))>UMTS 2100</a></li>
-                            <li role="presentation" class="nav-item col-1"><a aria-controls="tabL2100" role="tab" data-toggle="tab" class="nav-link text-center @(_activeRSL2100 ? "active" : "")" @onclick=@(() => SelectTab("L2100"))>LTE 2100</a></li>
-                            <li role="presentation" class="nav-item col-1"><a aria-controls="tabL2600" role="tab" data-toggle="tab" class="nav-link text-center @(_activeRSL2600 ? "active" : "")" @onclick=@(() => SelectTab("L2600"))>LTE 2600</a></li>
-                            <li role="presentation" class="nav-item col-1"><a aria-controls="tabL3500" role="tab" data-toggle="tab" class="nav-link text-center @(_activeRSL3500 ? "active" : "")" @onclick=@(() => SelectTab("L3500"))>LTE 3500</a></li>
-                            <li role="presentation" class="nav-item col-1"><a aria-controls="tabNR3600" role="tab" data-toggle="tab" class="nav-link text-center @(_activeRSNR3600 ? "active" : "")" @onclick=@(() => SelectTab("NR3600"))>NR 3600</a></li>
-                            <li role="presentation" class="nav-item col-1"><a aria-controls="tabESS700" role="tab" data-toggle="tab" class="nav-link text-center @(_activeRSESS700 ? "active" : "")" @onclick=@(() => SelectTab("ESS700"))>ESS 700</a></li>
+                        <ul class="nav nav-tabs" id="myTab">
+                            <li class="nav-item col-1"><a class="nav-link text-center @(_activeRSL800 ? "active" : "")" @onclick=@(() => SelectTab("L800"))>LTE 800</a></li>
+                            <li class="nav-item col-1"><a class="nav-link text-center @(_activeRSG900 ? "active" : "")" @onclick=@(() => SelectTab("G900"))>GSM 900</a></li>
+                            <li class="nav-item col-1"><a class="nav-link text-center @(_activeRSU900 ? "active" : "")" @onclick=@(() => SelectTab("U900"))>UMTS 900</a></li>
+                            <li class="nav-item col-1"><a class="nav-link text-center @(_activeRSL900 ? "active" : "")" @onclick=@(() => SelectTab("L900"))>LTE 900</a></li>
+                            <li class="nav-item col-1"><a class="nav-link text-center @(_activeRSG1800 ? "active" : "")" @onclick=@(() => SelectTab("G1800"))>GSM 1800</a></li>
+                            <li class="nav-item col-1"><a class="nav-link text-center @(_activeRSL1800 ? "active" : "")" @onclick=@(() => SelectTab("L1800"))>LTE 1800</a></li>
+                            <li class="nav-item col-1"><a class="nav-link text-center @(_activeRSU2100 ? "active" : "")" @onclick=@(() => SelectTab("U2100"))>UMTS 2100</a></li>
+                            <li class="nav-item col-1"><a class="nav-link text-center @(_activeRSL2100 ? "active" : "")" @onclick=@(() => SelectTab("L2100"))>LTE 2100</a></li>
+                            <li class="nav-item col-1"><a class="nav-link text-center @(_activeRSL2600 ? "active" : "")" @onclick=@(() => SelectTab("L2600"))>LTE 2600</a></li>
+                            <li class="nav-item col-1"><a class="nav-link text-center @(_activeRSL3500 ? "active" : "")" @onclick=@(() => SelectTab("L3500"))>LTE 3500</a></li>
+                            <li class="nav-item col-1"><a class="nav-link text-center @(_activeRSNR3600 ? "active" : "")" @onclick=@(() => SelectTab("NR3600"))>NR 3600</a></li>
+                            <li class="nav-item col-1"><a class="nav-link text-center @(_activeRSESS700 ? "active" : "")" @onclick=@(() => SelectTab("ESS700"))>ESS 700</a></li>
                         </ul>
                     </div>
                    <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane active" id="tabL800" style="display: @(_activeRSL800 ? "block" : "none")">
+                        <div  id="tabL800" style="display: @(_activeRSL800 ? "block" : "none")">
                             <div class="form-group row mt-4">
                                 <div class="col-12 form-group has-float-label">
                                     <InputText @bind-Value="designACDTO.DesignACRadioSummaryL800_DTO.Comments" class="form-control">
@@ -159,7 +159,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div role="tabpanel" class="tab-pane active" id="tabG900" style="display: @(_activeRSG900 ? "block" : "none")">
+                        <div  id="tabG900" style="display: @(_activeRSG900 ? "block" : "none")">
                             <div class="form-group row mt-4">
                                 <div class="col-12 form-group has-float-label">
                                     <InputText @bind-Value="designACDTO.DesignACRadioSummaryG900_DTO.Comments" class="form-control">
@@ -173,7 +173,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div role="tabpanel" class="tab-pane active" id="tabG900" style="display: @(_activeRSU900 ? "block" : "none")">
+                        <div  id="tabG900" style="display: @(_activeRSU900 ? "block" : "none")">
                             <div class="form-group row mt-4">
                                 <div class="col-12 form-group has-float-label">
                                     <InputText @bind-Value="designACDTO.DesignACRadioSummaryU900_DTO.Comments" class="form-control">
@@ -187,7 +187,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div role="tabpanel" class="tab-pane active" id="tabG900" style="display: @(_activeRSL900 ? "block" : "none")">
+                        <div  id="tabG900" style="display: @(_activeRSL900 ? "block" : "none")">
                             <div class="form-group row mt-4">
                                 <div class="col-12 form-group has-float-label">
                                     <InputText @bind-Value="designACDTO.DesignACRadioSummaryL900_DTO.Comments" class="form-control">
@@ -201,7 +201,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div role="tabpanel" class="tab-pane active" id="tabG900" style="display: @(_activeRSG1800 ? "block" : "none")">
+                        <div  id="tabG900" style="display: @(_activeRSG1800 ? "block" : "none")">
                             <div class="form-group row mt-4">
                                 <div class="col-12 form-group has-float-label">
                                     <InputText @bind-Value="designACDTO.DesignACRadioSummaryG1800_DTO.Comments" class="form-control">
@@ -215,7 +215,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div role="tabpanel" class="tab-pane active" id="tabG900" style="display: @(_activeRSL1800 ? "block" : "none")">
+                        <div  id="tabG900" style="display: @(_activeRSL1800 ? "block" : "none")">
                             <div class="form-group row mt-4">
                                 <div class="col-12 form-group has-float-label">
                                     <InputText @bind-Value="designACDTO.DesignACRadioSummaryL1800_DTO.Comments" class="form-control">
@@ -229,7 +229,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div role="tabpanel" class="tab-pane active" id="tabG900" style="display: @(_activeRSU2100 ? "block" : "none")">
+                        <div  id="tabG900" style="display: @(_activeRSU2100 ? "block" : "none")">
                             <div class="form-group row mt-4">
                                 <div class="col-12 form-group has-float-label">
                                     <InputText @bind-Value="designACDTO.DesignACRadioSummaryU2100_DTO.Comments" class="form-control">
@@ -243,7 +243,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div role="tabpanel" class="tab-pane active" id="tabG900" style="display: @(_activeRSL2100 ? "block" : "none")">
+                        <div  id="tabG900" style="display: @(_activeRSL2100 ? "block" : "none")">
                             <div class="form-group row mt-4">
                                 <div class="col-12 form-group has-float-label">
                                     <InputText @bind-Value="designACDTO.DesignACRadioSummaryL2100_DTO.Comments" class="form-control">
@@ -257,7 +257,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div role="tabpanel" class="tab-pane active" id="tabG900" style="display: @(_activeRSL2600 ? "block" : "none")">
+                        <div  id="tabG900" style="display: @(_activeRSL2600 ? "block" : "none")">
                             <div class="form-group row mt-4">
                                 <div class="col-12 form-group has-float-label">
                                     <InputText @bind-Value="designACDTO.DesignACRadioSummaryL2600_DTO.Comments" class="form-control">
@@ -271,7 +271,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div role="tabpanel" class="tab-pane active" id="tabG900" style="display: @(_activeRSL3500 ? "block" : "none")">
+                        <div  id="tabG900" style="display: @(_activeRSL3500 ? "block" : "none")">
                             <div class="form-group row mt-4">
                                 <div class="col-12 form-group has-float-label">
                                     <InputText @bind-Value="designACDTO.DesignACRadioSummaryL3500_DTO.Comments" class="form-control">
@@ -285,7 +285,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div role="tabpanel" class="tab-pane active" id="tabG900" style="display: @(_activeRSNR3600 ? "block" : "none")">
+                        <div  id="tabG900" style="display: @(_activeRSNR3600 ? "block" : "none")">
                             <div class="form-group row mt-4">
                                 <div class="col-12 form-group has-float-label">
                                     <InputText @bind-Value="designACDTO.DesignACRadioSummaryNR3600_DTO.Comments" class="form-control">
@@ -299,7 +299,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div role="tabpanel" class="tab-pane active" id="tabG900" style="display: @(_activeRSESS700 ? "block" : "none")">
+                        <div  id="tabG900" style="display: @(_activeRSESS700 ? "block" : "none")">
                             <div class="form-group row mt-4">
                                 <div class="col-12 form-group has-float-label">
                                     <InputText @bind-Value="designACDTO.DesignACRadioSummaryESS700_DTO.Comments" class="form-control">
