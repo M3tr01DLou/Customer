@@ -26,48 +26,76 @@ namespace Customer.API.Controllers
             DesignACDTO designACDTO = new()
             {
                 DesignACId = id,
-                DesignACSiteTypeDTO = new(),
-                DesignACRadioSummaryL800_DTO = new(),
-                DesignACRadioSummaryG900_DTO = new(),
-                DesignACRadioSummaryU900_DTO = new(),
-                DesignACRadioSummaryL900_DTO = new(),
-                DesignACRadioSummaryG1800_DTO = new(),
-                DesignACRadioSummaryL1800_DTO = new(),
-                DesignACRadioSummaryU2100_DTO = new(),
-                DesignACRadioSummaryL2100_DTO = new(),
-                DesignACRadioSummaryL2600_DTO = new(),
-                DesignACRadioSummaryL3500_DTO = new(),
-                DesignACRadioSummaryNR3600_DTO = new(),
-                DesignACRadioSummaryESS700_DTO = new()
-            };
+                DesignACTipoEmplazamientoDTO = new(),
+                DesignACResumenRadioL800_DTO = new(),
+                DesignACResumenRadioG900_DTO = new(),
+                DesignACResumenRadioU900_DTO = new(),
+                DesignACResumenRadioL900_DTO = new(),
+                DesignACResumenRadioG1800_DTO = new(),
+                DesignACResumenRadioL1800_DTO = new(),
+                DesignACResumenRadioU2100_DTO = new(),
+                DesignACResumenRadioL2100_DTO = new(),
+                DesignACResumenRadioL2600_DTO = new(),
+                DesignACResumenRadioL3500_DTO = new(),
+                DesignACResumenRadioNR3600_DTO = new(),
+                DesignACResumenRadioESS700_DTO = new(),
+				DesignACAccesoEmplazamientoDTO = new(),
+			};
 
-            var designACSiteType = await _context.DesignACSiteTypes
+            var designACTipoEmplazazamiento = await _context.DesignACTipoEmplazamiento
                 .Include(d => d.DesignAC)
-                .Include(st => st.Station)
-                .Include(s => s.Stand)
-                .Include(so => so.SiteOwner)
-                .Include(oi => oi.OutdoorInstallation)
+                .Include(st => st.TipoEstacion)
+                .Include(s => s.TipoCaseta)
+                .Include(so => so.TipoPropiertarioEmplazamiento)
+                .Include(oi => oi.TipoInstalacionExterior)
                 .Where(d => d.DesignAC.Id == id)
                 .FirstOrDefaultAsync();
-            designACDTO.DesignACSiteTypeDTO = await _converterHelper.ToDesignACSiteTypeDTO(designACSiteType!);
+            designACDTO.DesignACTipoEmplazamientoDTO = await _converterHelper.ToDesignACTipoEmplazamientoDTO(designACTipoEmplazazamiento!);
 
-            List<DesignACRadioSummary> designACRadioSummary = await _context.DesignACRadioSummaries!
+            var designACResumenRadio = await _context.DesignACResumenRadio!
                 .Include(d => d.DesignAC)
                 .Where(d => d.DesignAC.Id == id)
                 .ToListAsync();
 
-            designACDTO.DesignACRadioSummaryL800_DTO = _converterHelper.ToDesignACRadioSummaryDTO(designACRadioSummary, "L800");
-            designACDTO.DesignACRadioSummaryG900_DTO = _converterHelper.ToDesignACRadioSummaryDTO(designACRadioSummary, "G900");
-            designACDTO.DesignACRadioSummaryU900_DTO = _converterHelper.ToDesignACRadioSummaryDTO(designACRadioSummary, "U900");
-            designACDTO.DesignACRadioSummaryL900_DTO = _converterHelper.ToDesignACRadioSummaryDTO(designACRadioSummary, "L900");
-            designACDTO.DesignACRadioSummaryG1800_DTO = _converterHelper.ToDesignACRadioSummaryDTO(designACRadioSummary, "G1800");
-            designACDTO.DesignACRadioSummaryL1800_DTO = _converterHelper.ToDesignACRadioSummaryDTO(designACRadioSummary, "L1800");
-            designACDTO.DesignACRadioSummaryU2100_DTO = _converterHelper.ToDesignACRadioSummaryDTO(designACRadioSummary, "U2100");
-            designACDTO.DesignACRadioSummaryL2100_DTO = _converterHelper.ToDesignACRadioSummaryDTO(designACRadioSummary, "L2100");
-            designACDTO.DesignACRadioSummaryL2600_DTO = _converterHelper.ToDesignACRadioSummaryDTO(designACRadioSummary, "L2600");
-            designACDTO.DesignACRadioSummaryL3500_DTO = _converterHelper.ToDesignACRadioSummaryDTO(designACRadioSummary, "L3500");
-            designACDTO.DesignACRadioSummaryNR3600_DTO = _converterHelper.ToDesignACRadioSummaryDTO(designACRadioSummary, "NR3600");
-            designACDTO.DesignACRadioSummaryESS700_DTO = _converterHelper.ToDesignACRadioSummaryDTO(designACRadioSummary, "ESS700");
+            designACDTO.DesignACResumenRadioL800_DTO = _converterHelper.ToDesignACResumenRadioDTO(designACResumenRadio, "L800");
+            designACDTO.DesignACResumenRadioG900_DTO = _converterHelper.ToDesignACResumenRadioDTO(designACResumenRadio, "G900");
+            designACDTO.DesignACResumenRadioU900_DTO = _converterHelper.ToDesignACResumenRadioDTO(designACResumenRadio, "U900");
+            designACDTO.DesignACResumenRadioL900_DTO = _converterHelper.ToDesignACResumenRadioDTO(designACResumenRadio, "L900");
+            designACDTO.DesignACResumenRadioG1800_DTO = _converterHelper.ToDesignACResumenRadioDTO(designACResumenRadio, "G1800");
+            designACDTO.DesignACResumenRadioL1800_DTO = _converterHelper.ToDesignACResumenRadioDTO(designACResumenRadio, "L1800");
+            designACDTO.DesignACResumenRadioU2100_DTO = _converterHelper.ToDesignACResumenRadioDTO(designACResumenRadio, "U2100");
+            designACDTO.DesignACResumenRadioL2100_DTO = _converterHelper.ToDesignACResumenRadioDTO(designACResumenRadio, "L2100");
+            designACDTO.DesignACResumenRadioL2600_DTO = _converterHelper.ToDesignACResumenRadioDTO(designACResumenRadio, "L2600");
+            designACDTO.DesignACResumenRadioL3500_DTO = _converterHelper.ToDesignACResumenRadioDTO(designACResumenRadio, "L3500");
+            designACDTO.DesignACResumenRadioNR3600_DTO = _converterHelper.ToDesignACResumenRadioDTO(designACResumenRadio, "NR3600");
+            designACDTO.DesignACResumenRadioESS700_DTO = _converterHelper.ToDesignACResumenRadioDTO(designACResumenRadio, "ESS700");
+
+            var designACAccesoEmplazamiento = await _context.DesignACAccesoEmplazamiento
+				.Include(c => c.CaminoAcceso)
+				.Include(c => c.NecesidadGrua)
+				.Include(c => c.Tonelaje)
+				.Include(c => c.TipoGrua)
+				.Include(c => c.AccesoEmplazamiento)
+				.Include(c => c.CajetinLlaves)
+				.Include(c => c.TipoLlave)
+				.Include(c => c.AccesoEntradaMaterial)
+				.Include(c => c.TodasLlaveOK)
+				.Include(c => c.AutorizacionEspecial)
+				.Include(c => c.ContactoPropiedad)
+				.Include(c => c.TipoAcceso)
+				.Include(c => c.ProblemasDetectados)
+				.Include(c => c.TipoRangoHorario)
+				.Include(c => c.NecesidadAlpinista)
+				.Where(d => d.DesignAC.Id == id)
+				.FirstOrDefaultAsync();
+			designACDTO.DesignACAccesoEmplazamientoDTO = await _converterHelper.ToDesignACAccesoEmplazamientoDTO(designACAccesoEmplazamiento!);
+
+            var designACDatos = await _context.DesignACDatos
+                .Include(a => a.ActuacionTorres)
+                .Include(n => n.NecesarioAdecuacion)
+                .Where(d => d.DesignAC.Id == id)
+                .FirstOrDefaultAsync();
+            designACDTO.DesignACDatosDTO = await _converterHelper.ToDesignACDatosDTO(designACDatos!);
 
             return Ok(designACDTO);
         }

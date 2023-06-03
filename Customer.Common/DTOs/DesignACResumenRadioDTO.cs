@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace Customer.Common.DTOs
 {
-    public class DesignACRadioSummaryDTO
+    public class DesignACResumenRadioDTO
     {
         public int Id { get; set; }
 
-        public string Technology { get; set; }
+        public string Tecnologia { get; set; }
 
-        public string Comments { get; set; }
+        public string Comentarios { get; set; }
 
-        public string Needs { get; set; }
+        public string Necesita { get; set; }
     }
 }

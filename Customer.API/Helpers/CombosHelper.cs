@@ -13,24 +13,59 @@ namespace Customer.API.Helpers
             _context = context;
         }
 
-        public async Task<List<TypeOutdoorInstallation>> GetComboTypeOutdoorInstallationsAsync()
+        public async Task<List<TipoInstalacionExterior>> GetComboTipoInstalacionExteriorAsync()
         { 
-            return await _context.TypeOutdoorInstallations.ToListAsync();
+            return await _context.TipoInstalacionExterior.ToListAsync();
         }
 
-        public async Task<List<TypeSiteOwner>> GetComboTypeSiteOwnersAsync()
+        public async Task<List<TipoPropiertarioEmplazamiento>> GetComboTipoPropietarioEmplazamientoAsync()
         {
-            return await _context.TypeSiteOwners.ToListAsync();
+            return await _context.TipoPropiertarioEmplazamiento.ToListAsync();
         }
 
-        public async Task<List<TypeStand>> GetComboTypeStandsAsync()
+        public async Task<List<TipoCaseta>> GetComboTipoCasetaAsync()
         {
-            return await _context.TypeStands.ToListAsync();
+            return await _context.TipoCaseta.ToListAsync();
         }
 
-        public async Task<List<TypeStation>> GetComboTypeStationsAsync()
+        public async Task<List<TipoEstacion>> GetComboTipoEstacionAsync()
         {
-            return await _context.TypeStations.ToListAsync();
+            return await _context.TipoEstacion.ToListAsync();
+        }
+
+		public async Task<List<TipoOK>> GetComboTipoOkAsync()
+		{
+			return await _context.TipoOK.ToListAsync();
+		}
+
+		public async Task<List<TipoTonelaje>> GetComboTipoTonelajeAsync()
+		{
+			return await _context.TipoTonelaje.ToListAsync();
+		}
+
+		public async Task<List<TipoGrua>> GetComboTipoGruaAsync()
+		{
+			return await _context.TipoGrua.ToListAsync();
+		}
+
+		public async Task<List<TipoLlave>> GetComboTipoLlaveAsync()
+		{
+			return await _context.TipoLlave.ToListAsync();
+		}
+
+		public async Task<List<TipoAcceso>> GetComboTipoAccesoAsync()
+		{
+			return await _context.TipoAcceso.ToListAsync();
+		}
+
+		public async Task<List<TipoRangoHorario>> GetComboTipoRangoHorarioAsync()
+		{
+			return await _context.TipoRangoHorario.ToListAsync();
+        }
+
+        public async Task<List<TipoSiNo>> GetComboTipoSiNoAsync()
+        {
+            return await _context.TipoSiNo.ToListAsync();
         }
     }
 }

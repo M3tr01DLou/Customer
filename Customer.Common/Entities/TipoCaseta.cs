@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Customer.Common.Entities
 {
-    public class TypeStand
+    public class TipoCaseta
     {
         public int Id { get; set; }
 
         [MaxLength(255)]
-        public string Name { get; set; }
+        public string Nombre { get; set; }
     }
 }

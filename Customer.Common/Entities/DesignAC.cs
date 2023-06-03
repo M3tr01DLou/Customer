@@ -9,16 +9,16 @@ namespace Customer.Common.Entities
         public int VersionId { get; set; }
 
         [MaxLength(50)]
-        public string Site { get; set; }
+        public string Emplazamiento { get; set; }
 
-        public User User { get; set; }
+        public Usuario Usuario { get; set; }
 
-        public Operator Operator { get; set; }
+        public Operador Operador { get; set; }
 
-        public Project Project { get; set; }
+        public Proyecto Proyecto { get; set; }
 
-        public Country Country { get; set; }
+        public Pais Pais { get; set; }
 
-        public State State { get; set; }
+        public TipoEstadoDiseno TipoEstadoDiseno { get; set; }
     }
 }

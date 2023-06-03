@@ -7,15 +7,11 @@ using System.Threading.Tasks;
 
 namespace Customer.Common.Entities
 {
-    public class Operator
+    public class TipoPropiertarioEmplazamiento
     {
         public int Id { get; set; }
 
-        public int OperatorId { get; set; }
-
-        [MaxLength(150)]
-        public string Name { get; set; }
-
-        public bool Active { get; set; }
+        [MaxLength(255)]
+        public string Nombre { get; set; }
     }
 }

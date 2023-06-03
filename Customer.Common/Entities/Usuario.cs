@@ -2,12 +2,12 @@
 
 namespace Customer.Common.Entities
 {
-    public class User
+    public class Usuario
     {
         public int Id { get; set; }
 
         [MaxLength(170)]
-        public string Name { get; set; }
+        public string Nombre { get; set; }
 
         [MaxLength(150)]
         public string Login { get; set; }
@@ -15,9 +15,9 @@ namespace Customer.Common.Entities
         public Asp Asp { get; set; }
 
         [MaxLength(50)]
-        public string Organization { get; set; }
+        public string Organizacion { get; set; }
 
         [MaxLength(150)]
-        public bool Administrator { get; set; }
+        public bool Administrador { get; set; }
     }
 }

@@ -7,13 +7,15 @@ using System.Threading.Tasks;
 
 namespace Customer.Common.Entities
 {
-    public class State
+    public class Operador
     {
         public int Id { get; set; }
 
-        [MaxLength(150)]
-        public string Status { get; set; }
+        public int OperatorId { get; set; }
 
-        public bool Active { get; set; }
+        [MaxLength(150)]
+        public string Nombre { get; set; }
+
+        public bool Activo { get; set; }
     }
 }

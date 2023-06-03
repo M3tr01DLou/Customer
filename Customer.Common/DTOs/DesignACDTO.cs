@@ -10,30 +10,34 @@ namespace Customer.Common.DTOs
     {
         public int DesignACId { get; set; }
 
-        public DesignACSiteTypeDTO DesignACSiteTypeDTO { get; set; }
+        public DesignACTipoEmplazamientoDTO DesignACTipoEmplazamientoDTO { get; set; }
 
-        public DesignACRadioSummaryDTO DesignACRadioSummaryL800_DTO { get; set; }
+        public DesignACResumenRadioDTO DesignACResumenRadioL800_DTO { get; set; }
 
-        public DesignACRadioSummaryDTO DesignACRadioSummaryG900_DTO { get; set; }
+        public DesignACResumenRadioDTO DesignACResumenRadioG900_DTO { get; set; }
 
-        public DesignACRadioSummaryDTO DesignACRadioSummaryU900_DTO { get; set; }
+        public DesignACResumenRadioDTO DesignACResumenRadioU900_DTO { get; set; }
 
-        public DesignACRadioSummaryDTO DesignACRadioSummaryL900_DTO { get; set; }
+        public DesignACResumenRadioDTO DesignACResumenRadioL900_DTO { get; set; }
 
-        public DesignACRadioSummaryDTO DesignACRadioSummaryG1800_DTO { get; set; }
+        public DesignACResumenRadioDTO DesignACResumenRadioG1800_DTO { get; set; }
 
-        public DesignACRadioSummaryDTO DesignACRadioSummaryL1800_DTO { get; set; }
+        public DesignACResumenRadioDTO DesignACResumenRadioL1800_DTO { get; set; }
 
-        public DesignACRadioSummaryDTO DesignACRadioSummaryU2100_DTO { get; set; }
+        public DesignACResumenRadioDTO DesignACResumenRadioU2100_DTO { get; set; }
 
-        public DesignACRadioSummaryDTO DesignACRadioSummaryL2100_DTO { get; set; }
+        public DesignACResumenRadioDTO DesignACResumenRadioL2100_DTO { get; set; }
 
-        public DesignACRadioSummaryDTO DesignACRadioSummaryL2600_DTO { get; set; }
+        public DesignACResumenRadioDTO DesignACResumenRadioL2600_DTO { get; set; }
 
-        public DesignACRadioSummaryDTO DesignACRadioSummaryL3500_DTO { get; set; }
+        public DesignACResumenRadioDTO DesignACResumenRadioL3500_DTO { get; set; }
 
-        public DesignACRadioSummaryDTO DesignACRadioSummaryNR3600_DTO { get; set; }
+        public DesignACResumenRadioDTO DesignACResumenRadioNR3600_DTO { get; set; }
 
-        public DesignACRadioSummaryDTO DesignACRadioSummaryESS700_DTO { get; set; }
+        public DesignACResumenRadioDTO DesignACResumenRadioESS700_DTO { get; set; }
+
+        public DesignACAccesoEmplazamientoDTO DesignACAccesoEmplazamientoDTO { get; set; }
+
+        public DesignACDatosDTO DesignACDatosDTO { get; set; }
     }
 }

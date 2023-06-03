@@ -5,13 +5,26 @@ namespace Customer.API.Helpers
 {
     public interface ICombosHelper
     {
-        Task<List<TypeStation>> GetComboTypeStationsAsync();
+        Task<List<TipoEstacion>> GetComboTipoEstacionAsync();
 
-        Task<List<TypeStand>> GetComboTypeStandsAsync();
+        Task<List<TipoCaseta>> GetComboTipoCasetaAsync();
 
-        Task<List<TypeSiteOwner>> GetComboTypeSiteOwnersAsync();
+        Task<List<TipoPropiertarioEmplazamiento>> GetComboTipoPropietarioEmplazamientoAsync();
 
-        Task<List<TypeOutdoorInstallation>> GetComboTypeOutdoorInstallationsAsync();
+        Task<List<TipoInstalacionExterior>> GetComboTipoInstalacionExteriorAsync();
 
+		Task<List<TipoOK>> GetComboTipoOkAsync();
+
+		Task<List<TipoTonelaje>> GetComboTipoTonelajeAsync();
+
+		Task<List<TipoGrua>> GetComboTipoGruaAsync();
+
+		Task<List<TipoLlave>> GetComboTipoLlaveAsync();
+
+		Task<List<TipoAcceso>> GetComboTipoAccesoAsync();
+
+		Task<List<TipoRangoHorario>> GetComboTipoRangoHorarioAsync();
+
+        Task<List<TipoSiNo>> GetComboTipoSiNoAsync();
     }
 }

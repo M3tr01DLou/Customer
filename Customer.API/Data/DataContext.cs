@@ -12,29 +12,49 @@ namespace Customer.API.Data
 
         public DbSet<Asp> Asps { get; set; }
 
-        public DbSet<Country> Countries{ get; set; }
+        public DbSet<Pais> Paises { get; set; }
 
-        public DbSet<DesignAC> DesignACs { get; set; }
+        public DbSet<Operador> Operadores { get; set; }
 
-        public DbSet<DesignACRadioSummary> DesignACRadioSummaries { get; set; }
+        public DbSet<TipoInstalacionExterior> TipoInstalacionExterior { get; set; }
 
-        public DbSet<DesignACSiteType> DesignACSiteTypes { get; set; }
+        public DbSet<Proyecto> Proyectos { get; set; }
 
-        public DbSet<Operator> Operators { get; set; }
+		public DbSet<TipoOK> TipoOK { get; set; }
 
-        public DbSet<TypeOutdoorInstallation> TypeOutdoorInstallations { get; set; }
+		public DbSet<TipoPropiertarioEmplazamiento> TipoPropiertarioEmplazamiento { get; set; }
 
-        public DbSet<Project> Projects { get; set; }
+		public DbSet<TipoTonelaje> TipoTonelaje { get; set; }
 
-        public DbSet<TypeSiteOwner> TypeSiteOwners { get; set; }
+		public DbSet<TipoCaseta> TipoCaseta { get; set; }
 
-        public DbSet<TypeStand> TypeStands { get; set; }
+        public DbSet<TipoEstadoDiseno> TipoEstadoDiseno { get; set; }
 
-        public DbSet<State> States { get; set; }
+        public DbSet<TipoEstacion> TipoEstacion { get; set; }
 
-        public DbSet<TypeStation> TypeStations { get; set; }
+		public DbSet<TipoGrua> TipoGrua { get; set; }
 
-        public DbSet<User> Users { get; set; }
+		public DbSet<TipoLlave> TipoLlave { get; set; }
+
+		public DbSet<TipoAcceso> TipoAcceso { get; set; }
+
+		public DbSet<TipoRangoHorario> TipoRangoHorario { get; set; }
+
+        public DbSet<TipoSiNo> TipoSiNo { get; set; }
+
+
+
+        public DbSet<DesignAC> DesignAC { get; set; }
+
+		public DbSet<DesignACResumenRadio> DesignACResumenRadio { get; set; }
+
+		public DbSet<DesignACTipoEmplazamiento> DesignACTipoEmplazamiento { get; set; }
+
+		public DbSet<DesignACAccesoEmplazamiento> DesignACAccesoEmplazamiento { get; set; }
+
+		public DbSet<DesignACDatos> DesignACDatos { get; set; }
+
+		public DbSet<Usuario> Usuarios { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

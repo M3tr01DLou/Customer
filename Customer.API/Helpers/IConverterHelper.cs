@@ -5,8 +5,12 @@ namespace Customer.API.Helpers
 {
     public interface IConverterHelper
     {
-        Task<DesignACSiteTypeDTO> ToDesignACSiteTypeDTO(DesignACSiteType model);
+        Task<DesignACTipoEmplazamientoDTO> ToDesignACTipoEmplazamientoDTO(DesignACTipoEmplazamiento model);
 
-        DesignACRadioSummaryDTO ToDesignACRadioSummaryDTO(List<DesignACRadioSummary> model, string technology);
+        DesignACResumenRadioDTO ToDesignACResumenRadioDTO(List<DesignACResumenRadio> model, string technology);
+
+		Task<DesignACAccesoEmplazamientoDTO> ToDesignACAccesoEmplazamientoDTO(DesignACAccesoEmplazamiento model);
+
+        Task<DesignACDatosDTO> ToDesignACDatosDTO(DesignACDatos model);
     }
 }

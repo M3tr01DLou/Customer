@@ -7,19 +7,19 @@ using System.Threading.Tasks;
 
 namespace Customer.Common.Entities
 {
-    public class DesignACRadioSummary
+    public class DesignACResumenRadio
     {
         public int Id { get; set; }
 
         public DesignAC DesignAC { get; set; }
 
         [MaxLength(50)]
-        public string Technology { get; set; }
+        public string Tecnologia { get; set; }
 
         [MaxLength(1000)]
-        public string Comments { get; set; }
+        public string Comentarios { get; set; }
 
         [MaxLength(1000)]
-        public string Needs { get; set; }
+        public string Necesita { get; set; }
     }
 }

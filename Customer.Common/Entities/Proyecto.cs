@@ -7,11 +7,13 @@ using System.Threading.Tasks;
 
 namespace Customer.Common.Entities
 {
-    public class TypeOutdoorInstallation
+    public class Proyecto
     {
         public int Id { get; set; }
 
-        [MaxLength(255)]
-        public string Name { get; set; }
+        [MaxLength(150)]
+        public string Nombre { get; set; }
+
+        public bool Activo { get; set; }
     }
 }

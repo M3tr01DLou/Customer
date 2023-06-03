@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Customer.Common.Entities
 {
-    public class Project
+    public class TipoEstadoDiseno
     {
         public int Id { get; set; }
 
         [MaxLength(150)]
-        public string Name { get; set; }
+        public string Estado { get; set; }
 
-        public bool Active { get; set; }
+        public bool Activo { get; set; }
     }
 }

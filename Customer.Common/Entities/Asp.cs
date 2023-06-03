@@ -7,10 +7,10 @@ namespace Customer.Common.Entities
         public int Id { get; set; }
 
         [MaxLength(50)]
-        public string Name { get; set; }
+        public string Nombre { get; set; }
 
         [MaxLength(50)]
-        public string GenericUserGestDoc { get; set; }
+        public string UsuarioGenericoGestorDocumental { get; set; }
 
         [MaxLength(150)]
         public string Email { get; set; }

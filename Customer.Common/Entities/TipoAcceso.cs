@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Customer.Common.Entities
 {
-    public class TypeSiteOwner
-    {
-        public int Id { get; set; }
+	public class TipoAcceso
+	{
+		public int Id { get; set; }
 
-        [MaxLength(255)]
-        public string Name { get; set; }
-    }
+		[MaxLength(255)]
+		public string Nombre { get; set; }
+	}
 }
