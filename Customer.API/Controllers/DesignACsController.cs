@@ -1,4 +1,5 @@
 ﻿using Customer.API.Data;
+using Customer.API.Helpers;
 using Customer.Common.DTOs;
 using Customer.Common.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -11,10 +12,12 @@ namespace Customer.API.Controllers
     public class DesignACsController : ControllerBase
     {
         private readonly DataContext _context;
+        private readonly IConverterHelper _converterHelper;
 
-        public DesignACsController(DataContext context)
+        public DesignACsController(DataContext context, IConverterHelper converterHelper)
         {
             _context = context;
+            _converterHelper = converterHelper;
         }
 
         [HttpGet("{id:int}")]
@@ -24,7 +27,18 @@ namespace Customer.API.Controllers
             {
                 DesignACId = id,
                 DesignACSiteTypeDTO = new(),
-                DesignACRadioSummaryDTO = new()
+                DesignACRadioSummaryL800_DTO = new(),
+                DesignACRadioSummaryG900_DTO = new(),
+                DesignACRadioSummaryU900_DTO = new(),
+                DesignACRadioSummaryL900_DTO = new(),
+                DesignACRadioSummaryG1800_DTO = new(),
+                DesignACRadioSummaryL1800_DTO = new(),
+                DesignACRadioSummaryU2100_DTO = new(),
+                DesignACRadioSummaryL2100_DTO = new(),
+                DesignACRadioSummaryL2600_DTO = new(),
+                DesignACRadioSummaryL3500_DTO = new(),
+                DesignACRadioSummaryNR3600_DTO = new(),
+                DesignACRadioSummaryESS700_DTO = new()
             };
 
             var designACSiteType = await _context.DesignACSiteTypes
@@ -33,36 +47,27 @@ namespace Customer.API.Controllers
                 .Include(s => s.Stand)
                 .Include(so => so.SiteOwner)
                 .Include(oi => oi.OutdoorInstallation)
-                .Where(d => d.DesignAC.Id == id).FirstOrDefaultAsync();
-            if (designACSiteType != null)
-            {
-                designACDTO.DesignACSiteTypeDTO.SiteOwnerId = designACSiteType.SiteOwner?.Id;
-                designACDTO.DesignACSiteTypeDTO.StationId = designACSiteType.Station?.Id;
-                designACDTO.DesignACSiteTypeDTO.StandId = designACSiteType.Stand?.Id;
-                designACDTO.DesignACSiteTypeDTO.OutdoorInstallationId = designACSiteType.OutdoorInstallation?.Id;
-                designACDTO.DesignACSiteTypeDTO.SharedLocationNotShared = designACSiteType.SharedLocationNotShared;
-                designACDTO.DesignACSiteTypeDTO.SharedLocationVodafone = designACSiteType.SharedLocationVodafone;
-                designACDTO.DesignACSiteTypeDTO.SharedLocationOrange = designACSiteType.SharedLocationOrange;
-                designACDTO.DesignACSiteTypeDTO.SharedLocationTelxius = designACSiteType.SharedLocationTelxius;
-                designACDTO.DesignACSiteTypeDTO.SharedLocationYoigo = designACSiteType.SharedLocationYoigo;
-                designACDTO.DesignACSiteTypeDTO.SharedLocationAdif = designACSiteType.SharedLocationAdif;
-                designACDTO.DesignACSiteTypeDTO.SharedLocationOthers = designACSiteType.SharedLocationOthers;
-                designACDTO.DesignACSiteTypeDTO.SharedLocationCellnex = designACSiteType.SharedLocationCellnex;
-            }
-            designACDTO.DesignACSiteTypeDTO.TypeStations = await _context.TypeStations.ToListAsync();
-            designACDTO.DesignACSiteTypeDTO.TypeStands = await _context.TypeStands.ToListAsync();
-            designACDTO.DesignACSiteTypeDTO.TypeSiteOwners = await _context.TypeSiteOwners.ToListAsync();
-            designACDTO.DesignACSiteTypeDTO.TypeOutdoorInstallations = await _context.TypeOutdoorInstallations.ToListAsync();
+                .Where(d => d.DesignAC.Id == id)
+                .FirstOrDefaultAsync();
+            designACDTO.DesignACSiteTypeDTO = await _converterHelper.ToDesignACSiteTypeDTO(designACSiteType!);
 
-            designACDTO.DesignACRadioSummaryDTO = await _context.DesignACRadioSummaries!
+            List<DesignACRadioSummary> designACRadioSummary = await _context.DesignACRadioSummaries!
                 .Include(d => d.DesignAC)
                 .Where(d => d.DesignAC.Id == id)
-                .Select(rs => new DesignACRadioSummaryDTO {
-                    Technology = rs.Technology,
-                    Comments = rs.Comments,
-                    Needs = rs.Needs
-                })
                 .ToListAsync();
+
+            designACDTO.DesignACRadioSummaryL800_DTO = _converterHelper.ToDesignACRadioSummaryDTO(designACRadioSummary, "L800");
+            designACDTO.DesignACRadioSummaryG900_DTO = _converterHelper.ToDesignACRadioSummaryDTO(designACRadioSummary, "G900");
+            designACDTO.DesignACRadioSummaryU900_DTO = _converterHelper.ToDesignACRadioSummaryDTO(designACRadioSummary, "U900");
+            designACDTO.DesignACRadioSummaryL900_DTO = _converterHelper.ToDesignACRadioSummaryDTO(designACRadioSummary, "L900");
+            designACDTO.DesignACRadioSummaryG1800_DTO = _converterHelper.ToDesignACRadioSummaryDTO(designACRadioSummary, "G1800");
+            designACDTO.DesignACRadioSummaryL1800_DTO = _converterHelper.ToDesignACRadioSummaryDTO(designACRadioSummary, "L1800");
+            designACDTO.DesignACRadioSummaryU2100_DTO = _converterHelper.ToDesignACRadioSummaryDTO(designACRadioSummary, "U2100");
+            designACDTO.DesignACRadioSummaryL2100_DTO = _converterHelper.ToDesignACRadioSummaryDTO(designACRadioSummary, "L2100");
+            designACDTO.DesignACRadioSummaryL2600_DTO = _converterHelper.ToDesignACRadioSummaryDTO(designACRadioSummary, "L2600");
+            designACDTO.DesignACRadioSummaryL3500_DTO = _converterHelper.ToDesignACRadioSummaryDTO(designACRadioSummary, "L3500");
+            designACDTO.DesignACRadioSummaryNR3600_DTO = _converterHelper.ToDesignACRadioSummaryDTO(designACRadioSummary, "NR3600");
+            designACDTO.DesignACRadioSummaryESS700_DTO = _converterHelper.ToDesignACRadioSummaryDTO(designACRadioSummary, "ESS700");
 
             return Ok(designACDTO);
         }

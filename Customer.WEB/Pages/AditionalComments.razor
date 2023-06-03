@@ -14,7 +14,7 @@
     <nav class="ml-2 mt-4">
         <div class="d-flex text-center">
             <div class="pl-0 mt-1"><strong>Comentarios adicionales</strong></div>
-            <button type="button" class="ml-2 btn primary">Guardar</button>
+            <button type="submit" class="ml-2 btn primary">Guardar</button>
             <button type="button" class="ml-2 btn primary">Copiar</button>
             <button type="button" class="ml-2 btn primary">Cerrar</button>
             <button type="button" class="ml-2 btn primary">Abrir</button>
@@ -127,71 +127,195 @@
         </div>
         <div class="card-content">
             <div class="content-form form-row">
-                <div class="tabs">
+                <div class="tabs col-12">
                     <div class="tab-button-outer">
                         <ul class="nav nav-tabs" role="tablist" id="myTab">
-                            <li role="presentation" class="active nav-item"><a href="#tabL800" aria-controls="tabL800" role="tab" data-toggle="tab" class="nav-link">LTE 800</a></li>
-                            <li role="presentation" class="nav-item"><a href="#tabG900" aria-controls="tabG900" role="tab" data-toggle="tab" class="nav-link">GSM 900</a></li>
-                            <li role="presentation" class="nav-item"><a href="#tabU900" aria-controls="tabU900" role="tab" data-toggle="tab" class="nav-link">UMTS 900</a></li>
-                            <li role="presentation" class="nav-item"><a href="#tabL900" aria-controls="tabL900" role="tab" data-toggle="tab" class="nav-link">LTE 900</a></li>
-                            <li role="presentation" class="nav-item"><a href="#tabG1800" aria-controls="tabG1800" role="tab" data-toggle="tab" class="nav-link">GSM 1800</a></li>
-                            <li role="presentation" class="nav-item"><a href="#tabL1800" aria-controls="tabL1800" role="tab" data-toggle="tab" class="nav-link">LTE 1800</a></li>
-                            <li role="presentation" class="nav-item"><a href="#tabU2100" aria-controls="tabU2100" role="tab" data-toggle="tab" class="nav-link">UMTS 2100</a></li>
-                            <li role="presentation" class="nav-item"><a href="#tabL2100" aria-controls="tabL2100" role="tab" data-toggle="tab" class="nav-link">LTE 2100</a></li>
-                            <li role="presentation" class="nav-item"><a href="#tabL2600" aria-controls="tabL2600" role="tab" data-toggle="tab" class="nav-link">LTE 2600</a></li>
-                            <li role="presentation" class="nav-item"><a href="#tabL3500" aria-controls="tabL3500" role="tab" data-toggle="tab" class="nav-link">LTE 3500</a></li>
-                            <li role="presentation" class="nav-item"><a href="#tabNR3600" aria-controls="tabNR3600" role="tab" data-toggle="tab" class="nav-link">NR 3600</a></li>
-                            <li role="presentation" class="nav-item"><a href="#tabESS700" aria-controls="tabESS700" role="tab" data-toggle="tab" class="nav-link">ESS 700</a></li>
+                            <li role="presentation" class="nav-item col-1"><a aria-controls="tabL800" role="tab" data-toggle="tab" class="nav-link text-center @(_activeRSL800 ? "active" : "")" @onclick=@(() => SelectTab("L800"))>LTE 800</a></li>
+                            <li role="presentation" class="nav-item col-1"><a aria-controls="tabG900" role="tab" data-toggle="tab" class="nav-link text-center @(_activeRSG900 ? "active" : "")" @onclick=@(() => SelectTab("G900"))>GSM 900</a></li>
+                            <li role="presentation" class="nav-item col-1"><a aria-controls="tabU900" role="tab" data-toggle="tab" class="nav-link text-center @(_activeRSU900 ? "active" : "")" @onclick=@(() => SelectTab("U900"))>UMTS 900</a></li>
+                            <li role="presentation" class="nav-item col-1"><a aria-controls="tabL900" role="tab" data-toggle="tab" class="nav-link text-center @(_activeRSL900 ? "active" : "")" @onclick=@(() => SelectTab("L900"))>LTE 900</a></li>
+                            <li role="presentation" class="nav-item col-1"><a aria-controls="tabG1800" role="tab" data-toggle="tab" class="nav-link text-center @(_activeRSG1800 ? "active" : "")" @onclick=@(() => SelectTab("G1800"))>GSM 1800</a></li>
+                            <li role="presentation" class="nav-item col-1"><a aria-controls="tabL1800" role="tab" data-toggle="tab" class="nav-link text-center @(_activeRSL1800 ? "active" : "")" @onclick=@(() => SelectTab("L1800"))>LTE 1800</a></li>
+                            <li role="presentation" class="nav-item col-1"><a aria-controls="tabU2100" role="tab" data-toggle="tab" class="nav-link text-center @(_activeRSU2100 ? "active" : "")" @onclick=@(() => SelectTab("U2100"))>UMTS 2100</a></li>
+                            <li role="presentation" class="nav-item col-1"><a aria-controls="tabL2100" role="tab" data-toggle="tab" class="nav-link text-center @(_activeRSL2100 ? "active" : "")" @onclick=@(() => SelectTab("L2100"))>LTE 2100</a></li>
+                            <li role="presentation" class="nav-item col-1"><a aria-controls="tabL2600" role="tab" data-toggle="tab" class="nav-link text-center @(_activeRSL2600 ? "active" : "")" @onclick=@(() => SelectTab("L2600"))>LTE 2600</a></li>
+                            <li role="presentation" class="nav-item col-1"><a aria-controls="tabL3500" role="tab" data-toggle="tab" class="nav-link text-center @(_activeRSL3500 ? "active" : "")" @onclick=@(() => SelectTab("L3500"))>LTE 3500</a></li>
+                            <li role="presentation" class="nav-item col-1"><a aria-controls="tabNR3600" role="tab" data-toggle="tab" class="nav-link text-center @(_activeRSNR3600 ? "active" : "")" @onclick=@(() => SelectTab("NR3600"))>NR 3600</a></li>
+                            <li role="presentation" class="nav-item col-1"><a aria-controls="tabESS700" role="tab" data-toggle="tab" class="nav-link text-center @(_activeRSESS700 ? "active" : "")" @onclick=@(() => SelectTab("ESS700"))>ESS 700</a></li>
                         </ul>
                     </div>
-                    <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane active" id="tabL800">
-                            <div class="containerResumen">
-                                <div class="form-group row">
-                                    <div class="col-md-2">
-                                        <span>Comentarios</span>
-                                    </div>
-                                    <div class="col-md-10">
-                                        <InputText id="level" name="level" type="text" @bind-Value="SelectedYear" class="form-control" />
-                                        <label for="level">Level (meters)</label>
-                                    </div>
+                   <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane active" id="tabL800" style="display: @(_activeRSL800 ? "block" : "none")">
+                            <div class="form-group row mt-4">
+                                <div class="col-12 form-group has-float-label">
+                                    <InputText @bind-Value="designACDTO.DesignACRadioSummaryL800_DTO.Comments" class="form-control">
+                                    </InputText>
+                                    <label for="radioPosition">Comentarios</label>
                                 </div>
-                                <div class="form-group row">
-                                    <div class="col-md-2">
-                                        <span>Necesita</span>
-                                    </div>
-                                    <div class="col-md-10">
-                                        <InputText id="level1" name="level" type="text" @bind-Value="SelectedYear" class="form-control" />
-                                        <label for="level">Level (meters)</label>
-                                    </div>
+                                <div class="col-12 form-group has-float-label">
+                                    <InputText @bind-Value="designACDTO.DesignACRadioSummaryL800_DTO.Needs" class="form-control">
+                                    </InputText>
+                                    <label for="radioPosition">Necesita</label>
                                 </div>
                             </div>
                         </div>
-                        <div role="tabpanel" class="tab-pane" id="tabG900">
-                            <div class="containerResumen">
-                                <div class="form-group row">
-                                    <div class="col-md-2">
-                                        <span>Comentarios g900</span>
-                                    </div>
-                                    <div class="col-md-10">
-                                        <InputText id="level3" name="level3" type="text" @bind-Value="SelectedYear" class="form-control" />
-                                        <label for="level">Level (meters)</label>
-                                    </div>
+                        <div role="tabpanel" class="tab-pane active" id="tabG900" style="display: @(_activeRSG900 ? "block" : "none")">
+                            <div class="form-group row mt-4">
+                                <div class="col-12 form-group has-float-label">
+                                    <InputText @bind-Value="designACDTO.DesignACRadioSummaryG900_DTO.Comments" class="form-control">
+                                    </InputText>
+                                    <label for="radioPosition">Comentarios</label>
                                 </div>
-                                <div class="form-group row">
-                                    <div class="col-md-2">
-                                        <span>Necesita g900</span>
-                                    </div>
-                                    <div class="col-md-10">
-                                        <InputText id="level31" name="level31" type="text" @bind-Value="SelectedYear" class="form-control" />
-                                        <label for="level">Level (meters)</label>
-                                    </div>
+                                <div class="col-12 form-group has-float-label">
+                                    <InputText @bind-Value="designACDTO.DesignACRadioSummaryG900_DTO.Needs" class="form-control">
+                                    </InputText>
+                                    <label for="radioPosition">Necesita</label>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                        <div role="tabpanel" class="tab-pane active" id="tabG900" style="display: @(_activeRSU900 ? "block" : "none")">
+                            <div class="form-group row mt-4">
+                                <div class="col-12 form-group has-float-label">
+                                    <InputText @bind-Value="designACDTO.DesignACRadioSummaryU900_DTO.Comments" class="form-control">
+                                    </InputText>
+                                    <label for="radioPosition">Comentarios</label>
+                                </div>
+                                <div class="col-12 form-group has-float-label">
+                                    <InputText @bind-Value="designACDTO.DesignACRadioSummaryU900_DTO.Needs" class="form-control">
+                                    </InputText>
+                                    <label for="radioPosition">Necesita</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane active" id="tabG900" style="display: @(_activeRSL900 ? "block" : "none")">
+                            <div class="form-group row mt-4">
+                                <div class="col-12 form-group has-float-label">
+                                    <InputText @bind-Value="designACDTO.DesignACRadioSummaryL900_DTO.Comments" class="form-control">
+                                    </InputText>
+                                    <label for="radioPosition">Comentarios</label>
+                                </div>
+                                <div class="col-12 form-group has-float-label">
+                                    <InputText @bind-Value="designACDTO.DesignACRadioSummaryL900_DTO.Needs" class="form-control">
+                                    </InputText>
+                                    <label for="radioPosition">Necesita</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane active" id="tabG900" style="display: @(_activeRSG1800 ? "block" : "none")">
+                            <div class="form-group row mt-4">
+                                <div class="col-12 form-group has-float-label">
+                                    <InputText @bind-Value="designACDTO.DesignACRadioSummaryG1800_DTO.Comments" class="form-control">
+                                    </InputText>
+                                    <label for="radioPosition">Comentarios</label>
+                                </div>
+                                <div class="col-12 form-group has-float-label">
+                                    <InputText @bind-Value="designACDTO.DesignACRadioSummaryG1800_DTO.Needs" class="form-control">
+                                    </InputText>
+                                    <label for="radioPosition">Necesita</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane active" id="tabG900" style="display: @(_activeRSL1800 ? "block" : "none")">
+                            <div class="form-group row mt-4">
+                                <div class="col-12 form-group has-float-label">
+                                    <InputText @bind-Value="designACDTO.DesignACRadioSummaryL1800_DTO.Comments" class="form-control">
+                                    </InputText>
+                                    <label for="radioPosition">Comentarios</label>
+                                </div>
+                                <div class="col-12 form-group has-float-label">
+                                    <InputText @bind-Value="designACDTO.DesignACRadioSummaryL1800_DTO.Needs" class="form-control">
+                                    </InputText>
+                                    <label for="radioPosition">Necesita</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane active" id="tabG900" style="display: @(_activeRSU2100 ? "block" : "none")">
+                            <div class="form-group row mt-4">
+                                <div class="col-12 form-group has-float-label">
+                                    <InputText @bind-Value="designACDTO.DesignACRadioSummaryU2100_DTO.Comments" class="form-control">
+                                    </InputText>
+                                    <label for="radioPosition">Comentarios</label>
+                                </div>
+                                <div class="col-12 form-group has-float-label">
+                                    <InputText @bind-Value="designACDTO.DesignACRadioSummaryU2100_DTO.Needs" class="form-control">
+                                    </InputText>
+                                    <label for="radioPosition">Necesita</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane active" id="tabG900" style="display: @(_activeRSL2100 ? "block" : "none")">
+                            <div class="form-group row mt-4">
+                                <div class="col-12 form-group has-float-label">
+                                    <InputText @bind-Value="designACDTO.DesignACRadioSummaryL2100_DTO.Comments" class="form-control">
+                                    </InputText>
+                                    <label for="radioPosition">Comentarios</label>
+                                </div>
+                                <div class="col-12 form-group has-float-label">
+                                    <InputText @bind-Value="designACDTO.DesignACRadioSummaryL2100_DTO.Needs" class="form-control">
+                                    </InputText>
+                                    <label for="radioPosition">Necesita</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane active" id="tabG900" style="display: @(_activeRSL2600 ? "block" : "none")">
+                            <div class="form-group row mt-4">
+                                <div class="col-12 form-group has-float-label">
+                                    <InputText @bind-Value="designACDTO.DesignACRadioSummaryL2600_DTO.Comments" class="form-control">
+                                    </InputText>
+                                    <label for="radioPosition">Comentarios</label>
+                                </div>
+                                <div class="col-12 form-group has-float-label">
+                                    <InputText @bind-Value="designACDTO.DesignACRadioSummaryL2600_DTO.Needs" class="form-control">
+                                    </InputText>
+                                    <label for="radioPosition">Necesita</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane active" id="tabG900" style="display: @(_activeRSL3500 ? "block" : "none")">
+                            <div class="form-group row mt-4">
+                                <div class="col-12 form-group has-float-label">
+                                    <InputText @bind-Value="designACDTO.DesignACRadioSummaryL3500_DTO.Comments" class="form-control">
+                                    </InputText>
+                                    <label for="radioPosition">Comentarios</label>
+                                </div>
+                                <div class="col-12 form-group has-float-label">
+                                    <InputText @bind-Value="designACDTO.DesignACRadioSummaryL3500_DTO.Needs" class="form-control">
+                                    </InputText>
+                                    <label for="radioPosition">Necesita</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane active" id="tabG900" style="display: @(_activeRSNR3600 ? "block" : "none")">
+                            <div class="form-group row mt-4">
+                                <div class="col-12 form-group has-float-label">
+                                    <InputText @bind-Value="designACDTO.DesignACRadioSummaryNR3600_DTO.Comments" class="form-control">
+                                    </InputText>
+                                    <label for="radioPosition">Comentarios</label>
+                                </div>
+                                <div class="col-12 form-group has-float-label">
+                                    <InputText @bind-Value="designACDTO.DesignACRadioSummaryNR3600_DTO.Needs" class="form-control">
+                                    </InputText>
+                                    <label for="radioPosition">Necesita</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div role="tabpanel" class="tab-pane active" id="tabG900" style="display: @(_activeRSESS700 ? "block" : "none")">
+                            <div class="form-group row mt-4">
+                                <div class="col-12 form-group has-float-label">
+                                    <InputText @bind-Value="designACDTO.DesignACRadioSummaryESS700_DTO.Comments" class="form-control">
+                                    </InputText>
+                                    <label for="radioPosition">Comentarios</label>
+                                </div>
+                                <div class="col-12 form-group has-float-label">
+                                    <InputText @bind-Value="designACDTO.DesignACRadioSummaryESS700_DTO.Needs" class="form-control">
+                                    </InputText>
+                                    <label for="radioPosition">Necesita</label>
+                                </div>
+                            </div>
+                        </div>
+                   </div>
             </div>
+        </div>
         </div>
     </div>
 
@@ -211,11 +335,23 @@
     private string _seccion;
 
     private string _id_usuario;
-    private InitialRequest initialRequest;
+    private InitialRequest _initialRequest;
 
     public DesignACDTO designACDTO = new DesignACDTO();
     public bool IsLoading;
-    private string SelectedYear { get; set; } = "2018";
+
+    private bool _activeRSL800 = true;
+    private bool _activeRSG900 = false;
+    private bool _activeRSU900 = false;
+    private bool _activeRSL900 = false;
+    private bool _activeRSG1800 = false;
+    private bool _activeRSL1800 = false;
+    private bool _activeRSU2100 = false;
+    private bool _activeRSL2100 = false;
+    private bool _activeRSL2600 = false;
+    private bool _activeRSL3500 = false;
+    private bool _activeRSNR3600 = false;
+    private bool _activeRSESS700 = false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -232,7 +368,7 @@
         _seccion = await sessionStorage.GetItemAsStringAsync("AteneaSeccion");
 
         //Check init
-        initialRequest = new InitialRequest
+        _initialRequest = new InitialRequest
             {
                 Administrator = _administradorEmpresa.ToString(),
                 Company = _empresa,
@@ -256,7 +392,7 @@
         {
             IsLoading = true;
             StateHasChanged();
-            var responseHttp = await repository.Post<InitialRequest, DesignAC>("/api/core/InitialChecks", initialRequest);
+            var responseHttp = await repository.Post<InitialRequest, DesignAC>("/api/core/InitialChecks", _initialRequest);
             if (responseHttp.Error)
             {
                 var message = await responseHttp.GetErrorMessageAsync();
@@ -288,6 +424,66 @@
         }
 
         designACDTO = responseHTTP.Response!;
+    }
+
+    private void SelectTab(string tabName)
+    {
+        ResetActiveTabs();
+        switch(tabName)
+        {
+            case "L800":
+                _activeRSL800 = true;
+                break;
+            case "G900":
+                _activeRSG900 = true;
+                break;
+            case "U900":
+                _activeRSU900 = true;
+                break;
+            case "L900":
+                _activeRSL900 = true;
+                break;
+            case "G1800":
+                _activeRSG1800 = true;
+                break;
+            case "L1800":
+                _activeRSL1800 = true;
+                break;
+            case "U2100":
+                _activeRSU2100 = true;
+                break;
+            case "L2100":
+                _activeRSL2100 = true;
+                break;
+            case "L2600":
+                _activeRSL2600 = true;
+                break;
+            case "L3500":
+                _activeRSL3500 = true;
+                break;
+            case "NR3600":
+                _activeRSNR3600 = true;
+                break;
+            case "ESS700":
+                _activeRSESS700 = true;
+                break;
+        }
+    }
+
+    private void ResetActiveTabs()
+    {
+        _activeRSL800 = false;
+        _activeRSG900 = false;
+        _activeRSU900 = false;
+        _activeRSL900 = false;
+        _activeRSG1800 = false;
+        _activeRSL1800 = false;
+        _activeRSU2100 = false;
+        _activeRSL2100 = false;
+        _activeRSL2600 = false;
+        _activeRSL3500 = false;
+        _activeRSNR3600 = false;
+        _activeRSESS700 = false;
     }
 
     private void SaveChangesAsync()

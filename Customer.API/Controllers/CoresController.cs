@@ -93,6 +93,33 @@ namespace Customer.API.Controllers
                     DesignACSiteType designACSiteType = new() { DesignAC = design };
                     _dataContext.Add(designACSiteType);
                     await _dataContext.SaveChangesAsync();
+
+                    DesignACRadioSummary designACRadioSummary;
+                    designACRadioSummary = new() { DesignAC = design, Technology = "L800", Comments = "N/A", Needs = "N/A" };
+                    _dataContext.Add(designACRadioSummary);
+                    designACRadioSummary = new() { DesignAC = design, Technology = "G900", Comments = "N/A", Needs = "N/A" };
+                    _dataContext.Add(designACRadioSummary);
+                    designACRadioSummary = new() { DesignAC = design, Technology = "U900", Comments = "N/A", Needs = "N/A" };
+                    _dataContext.Add(designACRadioSummary);
+                    designACRadioSummary = new() { DesignAC = design, Technology = "L900", Comments = "N/A", Needs = "N/A" };
+                    _dataContext.Add(designACRadioSummary);
+                    designACRadioSummary = new() { DesignAC = design, Technology = "G1800", Comments = "N/A", Needs = "N/A" };
+                    _dataContext.Add(designACRadioSummary);
+                    designACRadioSummary = new() { DesignAC = design, Technology = "L1800", Comments = "N/A", Needs = "N/A" };
+                    _dataContext.Add(designACRadioSummary);
+                    designACRadioSummary = new() { DesignAC = design, Technology = "U2100", Comments = "N/A", Needs = "N/A" };
+                    _dataContext.Add(designACRadioSummary);
+                    designACRadioSummary = new() { DesignAC = design, Technology = "L2100", Comments = "N/A", Needs = "N/A" };
+                    _dataContext.Add(designACRadioSummary);
+                    designACRadioSummary = new() { DesignAC = design, Technology = "L2600", Comments = "N/A", Needs = "N/A" };
+                    _dataContext.Add(designACRadioSummary);
+                    designACRadioSummary = new() { DesignAC = design, Technology = "L3500", Comments = "N/A", Needs = "N/A" };
+                    _dataContext.Add(designACRadioSummary);
+                    designACRadioSummary = new() { DesignAC = design, Technology = "NR3600", Comments = "N/A", Needs = "N/A" };
+                    _dataContext.Add(designACRadioSummary);
+                    designACRadioSummary = new() { DesignAC = design, Technology = "ESS700", Comments = "N/A", Needs = "N/A" };
+                    _dataContext.Add(designACRadioSummary);
+                    await _dataContext.SaveChangesAsync();
                 }
                 else
                 {

@@ -10,13 +10,12 @@ namespace Customer.Common.DTOs
 {
     public class DesignACRadioSummaryDTO
     {
-        [MaxLength(50)]
+        public int Id { get; set; }
+
         public string Technology { get; set; }
 
-        [MaxLength(1000)]
         public string Comments { get; set; }
 
-        [MaxLength(1000)]
         public string Needs { get; set; }
     }
 }

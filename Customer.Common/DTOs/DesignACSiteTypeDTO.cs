@@ -9,6 +9,9 @@ namespace Customer.Common.DTOs
 {
     public class DesignACSiteTypeDTO
     {
+
+        public int Id { get; set; }
+
         public int? StationId { get; set; }
 
         public List<TypeStation> TypeStations { get; set; }

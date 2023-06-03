@@ -1,4 +1,5 @@
 using Customer.API.Data;
+using Customer.API.Helpers;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
@@ -13,6 +14,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<DataContext>(x => x.UseSqlServer("name=DefaultConnection"));
 builder.Services.AddTransient<SeedDb>();
+builder.Services.AddScoped<IConverterHelper, ConverterHelper>();
+builder.Services.AddScoped<ICombosHelper, CombosHelper>();
 
 var app = builder.Build();
 
