@@ -12,5 +12,15 @@ namespace Customer.API.Helpers
 		Task<DesignACAccesoEmplazamientoDTO> ToDesignACAccesoEmplazamientoDTO(DesignACAccesoEmplazamiento model);
 
         Task<DesignACDatosDTO> ToDesignACDatosDTO(DesignACDatos model);
+
+
+
+        Task<DesignACTipoEmplazamiento> ToDesignACTipoEmplazamiento(DesignACTipoEmplazamientoDTO model, DesignAC designAC);
+
+        DesignACResumenRadio ToDesignACResumenRadio(DesignACResumenRadioDTO model, DesignAC designAC);
+
+        Task<DesignACAccesoEmplazamiento> ToDesignACAccesoEmplazamiento(DesignACAccesoEmplazamientoDTO model, DesignAC designAC);
+
+        Task<DesignACDatos> ToDesignACDatos(DesignACDatosDTO model, DesignAC designAC);
     }
 }

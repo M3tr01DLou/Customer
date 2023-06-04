@@ -864,8 +864,19 @@
         _activeRSESS700 = false;
     }
 
-    private void SaveChangesAsync()
+    private async Task SaveChangesAsync()
     {
-        
+        IsLoading = true;
+        StateHasChanged();
+
+        var responseHttp = await repository.Post("/api/designac/", designACDTO);
+        if (responseHttp.Error)
+        {
+            var message = await responseHttp.GetErrorMessageAsync();
+            return;
+        }
+
+        IsLoading = false;
+        StateHasChanged();
     }
 }

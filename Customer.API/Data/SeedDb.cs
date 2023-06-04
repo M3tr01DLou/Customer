@@ -179,12 +179,12 @@ namespace Customer.API.Data
 
 		private async Task CheckTipoAccesoAsync()
 		{
-			if (!_context.TipoLlave.Any())
+			if (!_context.TipoAcceso.Any())
 			{
-				_context.TipoLlave.Add(new TipoLlave { Nombre = string.Empty });
-				_context.TipoLlave.Add(new TipoLlave { Nombre = "Restringido" });
-				_context.TipoLlave.Add(new TipoLlave { Nombre = "No restringido" });
-				_context.TipoLlave.Add(new TipoLlave { Nombre = "Nocturno" });
+				_context.TipoAcceso.Add(new TipoAcceso { Nombre = string.Empty });
+				_context.TipoAcceso.Add(new TipoAcceso { Nombre = "Restringido" });
+				_context.TipoAcceso.Add(new TipoAcceso { Nombre = "No restringido" });
+				_context.TipoAcceso.Add(new TipoAcceso { Nombre = "Nocturno" });
 				await _context.SaveChangesAsync();
 			}
 		}

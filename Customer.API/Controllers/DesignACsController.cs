@@ -99,5 +99,41 @@ namespace Customer.API.Controllers
 
             return Ok(designACDTO);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> PostAsync([FromBody] DesignACDTO designAC)
+        {
+            var design = await _context.DesignAC.FirstOrDefaultAsync(x => x.Id == designAC.DesignACId);
+            if(design == null)
+            {
+                return NotFound();
+            }
+
+            DesignACTipoEmplazamiento designACTipoEmplazamiento = await _converterHelper.ToDesignACTipoEmplazamiento(designAC.DesignACTipoEmplazamientoDTO, design);
+            _context.Update(designACTipoEmplazamiento);
+            await _context.SaveChangesAsync();
+
+            List<DesignACResumenRadioDTO> designACResumenRadioDTOs = new() {
+                designAC.DesignACResumenRadioL800_DTO, designAC.DesignACResumenRadioG900_DTO, designAC.DesignACResumenRadioU900_DTO, designAC.DesignACResumenRadioL900_DTO,
+                designAC.DesignACResumenRadioG1800_DTO, designAC.DesignACResumenRadioL1800_DTO, designAC.DesignACResumenRadioU2100_DTO, designAC.DesignACResumenRadioL2100_DTO,
+                designAC.DesignACResumenRadioL2600_DTO, designAC.DesignACResumenRadioL3500_DTO, designAC.DesignACResumenRadioNR3600_DTO, designAC.DesignACResumenRadioESS700_DTO
+            };
+            foreach (var item in designACResumenRadioDTOs)
+            {
+                DesignACResumenRadio designACResumenRadio = _converterHelper.ToDesignACResumenRadio(item, design);
+                _context.Update(designACResumenRadio);
+            }
+            await _context.SaveChangesAsync();
+
+            DesignACAccesoEmplazamiento designACAccesoEmplazamiento = await _converterHelper.ToDesignACAccesoEmplazamiento(designAC.DesignACAccesoEmplazamientoDTO, design);
+            _context.Update(designACAccesoEmplazamiento);
+            await _context.SaveChangesAsync();
+
+            DesignACDatos designACDatos = await _converterHelper.ToDesignACDatos(designAC.DesignACDatosDTO, design);
+            _context.Update(designACDatos);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
     }
 }

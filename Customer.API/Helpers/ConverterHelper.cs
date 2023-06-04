@@ -8,10 +8,12 @@ namespace Customer.API.Helpers
 	public class ConverterHelper : IConverterHelper
     {
         private readonly ICombosHelper _combosHelper;
+        private readonly DataContext _context;
 
-        public ConverterHelper(ICombosHelper combosHelper)
+        public ConverterHelper(ICombosHelper combosHelper, DataContext context)
         {
             _combosHelper = combosHelper;
+            _context = context;
         }
 
 		public async Task<DesignACAccesoEmplazamientoDTO> ToDesignACAccesoEmplazamientoDTO(DesignACAccesoEmplazamiento designACAccesoEmplazamiento)
@@ -124,5 +126,98 @@ namespace Customer.API.Helpers
             };
         }
 
+
+
+        public async Task<DesignACTipoEmplazamiento> ToDesignACTipoEmplazamiento(DesignACTipoEmplazamientoDTO designACTipoEmplazamiento, DesignAC designAC)
+        {
+            return new DesignACTipoEmplazamiento
+            {
+                Id = designACTipoEmplazamiento.Id,
+                DesignAC = designAC,
+                TipoEstacion = await _context.TipoEstacion.FindAsync(designACTipoEmplazamiento.TipoEstacionId),
+                TipoCaseta = await _context.TipoCaseta.FindAsync(designACTipoEmplazamiento.TipoCasetaId),
+                TipoInstalacionExterior = await _context.TipoInstalacionExterior.FindAsync(designACTipoEmplazamiento.TipoInstalacionExteriorId),
+                TipoPropiertarioEmplazamiento = await _context.TipoPropiertarioEmplazamiento.FindAsync(designACTipoEmplazamiento.TipoPropiertarioEmplazamientoId),
+                NoCompartido = designACTipoEmplazamiento.NotShared,
+                Adif = designACTipoEmplazamiento.Adif,
+                Cellnex = designACTipoEmplazamiento.Cellnex,
+                Orange = designACTipoEmplazamiento.Orange,
+                Others = designACTipoEmplazamiento.Others,
+                Telxius = designACTipoEmplazamiento.Telxius,
+                Vodafone = designACTipoEmplazamiento.Vodafone,
+                Yoigo = designACTipoEmplazamiento.Yoigo,
+            };
+        }
+
+        public DesignACResumenRadio ToDesignACResumenRadio(DesignACResumenRadioDTO designACResumenRadio, DesignAC designAC)
+        {
+            return new DesignACResumenRadio
+            {
+                Id = designACResumenRadio.Id,
+                DesignAC = designAC,
+                Tecnologia = designACResumenRadio.Tecnologia,
+                Comentarios = designACResumenRadio.Comentarios,
+               Necesita = designACResumenRadio.Necesita 
+            };
+        }
+
+        public async Task<DesignACAccesoEmplazamiento> ToDesignACAccesoEmplazamiento(DesignACAccesoEmplazamientoDTO designACAccesoEmplazamiento, DesignAC designAC)
+        {
+            return new DesignACAccesoEmplazamiento
+            {
+                Id = designACAccesoEmplazamiento.Id,
+                DesignAC = designAC,
+                CaminoAcceso = await _context.TipoOK.FindAsync(designACAccesoEmplazamiento.CaminoAccesoId),
+                NecesidadGrua = await _context.TipoOK.FindAsync(designACAccesoEmplazamiento.NecesidadGruaId),
+                Necesidad4x4 = designACAccesoEmplazamiento.Necesidad4x4,
+                Tonelaje = await _context.TipoTonelaje.FindAsync(designACAccesoEmplazamiento.TonelajeId),
+                TipoGrua = await _context.TipoGrua.FindAsync(designACAccesoEmplazamiento.TipoGruaId),
+                AccesoEmplazamiento = await _context.TipoOK.FindAsync(designACAccesoEmplazamiento.AccesoEmplazamientoId),
+                CajetinLlaves = await _context.TipoOK.FindAsync(designACAccesoEmplazamiento.CajetinLlavesId),
+                TipoLlave = await _context.TipoLlave.FindAsync(designACAccesoEmplazamiento.TipoLlaveId),
+                AccesoEntradaMaterial = await _context.TipoOK.FindAsync(designACAccesoEmplazamiento.AccesoEntradaMaterialId),
+                TodasLlaveOK = await _context.TipoOK.FindAsync(designACAccesoEmplazamiento.TodasLlaveOKId),
+                AutorizacionEspecial = await _context.TipoOK.FindAsync(designACAccesoEmplazamiento.AutorizacionEspecialId),
+                ContactoPropiedad = await _context.TipoOK.FindAsync(designACAccesoEmplazamiento.ContactoPropiedadId),
+                TipoAcceso = await _context.TipoAcceso.FindAsync(designACAccesoEmplazamiento.TipoAccesoId),
+                ProblemasDetectados = await _context.TipoOK.FindAsync(designACAccesoEmplazamiento.ProblemasDetectadosId),
+                TipoRangoHorario = await _context.TipoRangoHorario.FindAsync(designACAccesoEmplazamiento.TipoRangoHorarioId),
+                NecesidadAlpinista = await _context.TipoOK.FindAsync(designACAccesoEmplazamiento.NecesidadAlpinistaId),
+                Comentarios = designACAccesoEmplazamiento.Comentarios,
+            };
+        }
+
+        public async Task<DesignACDatos> ToDesignACDatos(DesignACDatosDTO designACDatos, DesignAC designAC)
+        {
+            return new DesignACDatos
+            {
+                Id = designACDatos.Id,
+                DesignAC = designAC,
+                FechaVisita = designACDatos.FechaVisita,
+                FechaUltimoDiseno = designACDatos.FechaUltimoDiseno,
+                FechaUltimoDisenoAceptado = designACDatos.FechaUltimoDisenoAceptado,
+                ActuacionTorres = await _context.TipoSiNo.FindAsync(designACDatos.ActuacionTorresId),
+                SinObra = designACDatos.SinObra,
+                Sustancial = designACDatos.Sustancial,
+                NoSustancial = designACDatos.NoSustancial,
+                NecesarioAdecuacion = await _context.TipoSiNo.FindAsync(designACDatos.NecesarioAdecuacionId),
+                ObservacionesAdecuacion = designACDatos.ObservacionesAdecuacion,
+                AlarmasExternas = designACDatos.AlarmasExternas,
+                AlimentacionAcciones = designACDatos.AlimentacionAcciones,
+                AlimentacionComentarios = designACDatos.AlimentacionComentarios,
+                AntenasPasivosAcciones = designACDatos.AntenasPasivosAcciones,
+                AntenasPasivosComentarios = designACDatos.AntenasPasivosComentarios,
+                ComentariosTelxius = designACDatos.ComentariosTelxius,
+                Energia = designACDatos.Energia,
+                Equipo = designACDatos.Equipo,
+                Otro = designACDatos.Otro,
+                RBS = designACDatos.RBS,
+                Repartidor = designACDatos.Repartidor,
+                SSRR = designACDatos.SSRR,
+                TCUComentarios = designACDatos.TCUComentarios,
+                TomaTierra = designACDatos.TomaTierra,
+                TXComentarios = designACDatos.TXComentarios,
+            };
+        }
     }
 }
