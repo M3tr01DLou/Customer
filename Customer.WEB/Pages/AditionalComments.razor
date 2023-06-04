@@ -2,702 +2,707 @@
 @inject IRepository repository
 @inject ISessionStorageService sessionStorage
 
-@if (IsLoading)
+@if (IsLoading || designACDTO == null)
 {
     <div style="background: rgba(255, 255, 255, 0.4);z-index:1000;width:100%;min-height:100%;background-position :50% 50%;position:fixed;">
         <div class="spinner"></div>
     </div>
 }
+else
+{
+    <EditForm Model="designACDTO" OnValidSubmit="SaveChangesAsync">
+        <DataAnnotationsValidator/>
 
-<EditForm Model="@designACDTO" OnValidSubmit="SaveChangesAsync">
+        <nav class="ml-2 mt-4">
+            <div class="d-flex text-center">
+                <div class="pl-0 mt-1"><strong>Comentarios adicionales</strong></div>
+                <button type="submit" class="ml-2 btn primary">Guardar</button>
+                <button type="button" class="ml-2 btn primary">Copiar</button>
+                <button type="button" class="ml-2 btn primary">Cerrar</button>
+                <button type="button" class="ml-2 btn primary">Abrir</button>
+                <button type="button" class="ml-2 btn primary">Administracion</button>
+                <button type="button" class="ml-2 btn primary">RCA Codificador</button>
+            </div>
+        </nav>
+        <br />
+        <br />
 
-    <nav class="ml-2 mt-4">
-        <div class="d-flex text-center">
-            <div class="pl-0 mt-1"><strong>Comentarios adicionales</strong></div>
-            <button type="submit" class="ml-2 btn primary">Guardar</button>
-            <button type="button" class="ml-2 btn primary">Copiar</button>
-            <button type="button" class="ml-2 btn primary">Cerrar</button>
-            <button type="button" class="ml-2 btn primary">Abrir</button>
-            <button type="button" class="ml-2 btn primary">Administracion</button>
-            <button type="button" class="ml-2 btn primary">RCA Codificador</button>
-        </div>
-    </nav>
-    <br />
-
-    <div class="card card-custom card-compact">
-        <div class="card-title">
-            <div class="col-md-8 pl-0">Tipo de emplazamiento</div>
-        </div>
-        <div class="card-content">
-            <div class="content-form form-row">
-                <div class="col-3 form-group has-float-label">
-                    <InputSelect @bind-Value="designACDTO.DesignACTipoEmplazamientoDTO.TipoEstacionId" Id="designACDTO.DesignACSiteTypeDTO.StationId" class="form-control">
-                        @foreach (var item in designACDTO.DesignACTipoEmplazamientoDTO.TipoEstacion)
-                        {
-                            <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACTipoEmplazamientoDTO.TipoEstacionId)">@item.Nombre</option>
-                        }
-                    </InputSelect>
-                    <label for="radioPosition">Estación</label>
-                </div>
-                <div class="col-3 form-group has-float-label">
-                    <InputSelect @bind-Value="designACDTO.DesignACTipoEmplazamientoDTO.TipoCasetaId" Id="designACDTO.DesignACSiteTypeDTO.StandId" class="form-control">
-                        @foreach (var item in designACDTO.DesignACTipoEmplazamientoDTO.TipoCaseta)
-                        {
-                            <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACTipoEmplazamientoDTO.TipoCasetaId)">@item.Nombre</option>
-                        }
-                    </InputSelect>
-                    <label for="radioPosition">Tipo de caseta</label>
-                </div>
-                <div class="col-3 form-group has-float-label">
-                    <InputSelect @bind-Value="designACDTO.DesignACTipoEmplazamientoDTO.TipoInstalacionExteriorId" Id="designACDTO.DesignACSiteTypeDTO.OutdoorInstallationId" class="form-control">
-                        @foreach (var item in designACDTO.DesignACTipoEmplazamientoDTO.TipoInstalacionExterior)
-                        {
-                            <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACTipoEmplazamientoDTO.TipoInstalacionExteriorId)">@item.Nombre</option>
-                        }
-                    </InputSelect>
-                    <label for="radioPosition">Tipo de instalación</label>
-                </div>
-                <div class="col-3 form-group has-float-label">
-                    <InputSelect @bind-Value="designACDTO.DesignACTipoEmplazamientoDTO.TipoPropiertarioEmplazamientoId" Id="designACDTO.DesignACSiteTypeDTO.SiteOwnerId" class="form-control">
-                        @foreach (var item in designACDTO.DesignACTipoEmplazamientoDTO.TipoPropiertarioEmplazamiento)
-                        {
-                            <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACTipoEmplazamientoDTO.TipoPropiertarioEmplazamientoId)">@item.Nombre</option>
-                        }
-                    </InputSelect>
-                    <label for="radioPosition">Propietario del emplazamiento</label>
-                </div>
+        <div class="card card-custom card-compact">
+            <div class="card-title">
+                <div class="col-md-8 pl-0">Tipo de emplazamiento</div>
             </div>
-            <div class="content-form form-row">
-                <div class="col-1">
-                    <InputCheckbox @bind-Value="designACDTO.DesignACTipoEmplazamientoDTO.NotShared" class="form-check-input"></InputCheckbox>
-                    <label class="form-check-label">
-                        No compartido
-                    </label>
-                </div>
-                <div class="col-1">
-                    <InputCheckbox @bind-Value="designACDTO.DesignACTipoEmplazamientoDTO.Vodafone" class="form-check-input"></InputCheckbox>
-                    <label class="form-check-label">
-                        Vodafone
-                    </label>
-                </div>
-                <div class="col-1">
-                    <InputCheckbox @bind-Value="designACDTO.DesignACTipoEmplazamientoDTO.Orange" class="form-check-input"></InputCheckbox>
-                    <label class="form-check-label">
-                        Orange
-                    </label>
-                </div>
-                <div class="col-1">
-                    <InputCheckbox @bind-Value="designACDTO.DesignACTipoEmplazamientoDTO.Telxius" class="form-check-input"></InputCheckbox>
-                    <label class="form-check-label">
-                        Telxius
-                    </label>
-                </div>
-                <div class="col-1">
-                    <InputCheckbox @bind-Value="designACDTO.DesignACTipoEmplazamientoDTO.Yoigo" class="form-check-input"></InputCheckbox>
-                    <label class="form-check-label">
-                        Yoigo
-                    </label>
-                </div>
-                <div class="col-1">
-                    <InputCheckbox @bind-Value="designACDTO.DesignACTipoEmplazamientoDTO.Adif" class="form-check-input"></InputCheckbox>
-                    <label class="form-check-label">
-                        Adif
-                    </label>
-                </div>
-                <div class="col-1">
-                    <InputCheckbox @bind-Value="designACDTO.DesignACTipoEmplazamientoDTO.Cellnex" class="form-check-input"></InputCheckbox>
-                    <label class="form-check-label">
-                        Cellnex
-                    </label>
-                </div>
-                <div class="col-1">
-                    <InputCheckbox @bind-Value="designACDTO.DesignACTipoEmplazamientoDTO.Others" class="form-check-input"></InputCheckbox>
-                    <label class="form-check-label">
-                        Otros
-                    </label>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="card card-custom card-compact">
-        <div class="card-title">
-            <div class="col-md-8 pl-0">Acceso al emplazamiento</div>
-        </div>
-        <div class="card-content">
-            <div class="content-form form-row">
-                <div class="col-3 form-group has-float-label">
-                    <InputSelect @bind-Value="designACDTO.DesignACAccesoEmplazamientoDTO.CaminoAccesoId" Id="designACDTO.DesignACAccesoEmplazamientoDTO.CaminoAccesoId" class="form-control">
-                        @foreach (var item in designACDTO.DesignACAccesoEmplazamientoDTO.CaminoAcceso)
-                        {
-                            <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACAccesoEmplazamientoDTO.CaminoAccesoId)">@item.Nombre</option>
-                        }
-                    </InputSelect>
-                    <label for="radioPosition">Camino de acceso y acondicionamiento del terreno (Solo emplz. rural)</label>
-                </div>
-                <div class="col-1">
-                    <InputCheckbox @bind-Value="designACDTO.DesignACAccesoEmplazamientoDTO.Necesidad4x4" class="form-check-input"></InputCheckbox>
-                    <label class="form-check-label">Necesidad 4X4</label>
-                </div>
-            </div>
-            <div class="content-form form-row">
-                <div class="col-3 form-group has-float-label">
-                    <InputSelect @bind-Value="designACDTO.DesignACAccesoEmplazamientoDTO.NecesidadGruaId" Id="designACDTO.DesignACAccesoEmplazamientoDTO.NecesidadGruaId" class="form-control">
-                        @foreach (var item in designACDTO.DesignACAccesoEmplazamientoDTO.NecesidadGrua)
-                        {
-                            <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACAccesoEmplazamientoDTO.NecesidadGruaId)">@item.Nombre</option>
-                        }
-                    </InputSelect>
-                    <label for="radioPosition">Necesidad de Grúa</label>
-                </div>
-                <div class="col-3 form-group has-float-label">
-                    <InputSelect @bind-Value="designACDTO.DesignACAccesoEmplazamientoDTO.TonelajeId" Id="designACDTO.DesignACAccesoEmplazamientoDTO.TonelajeId" class="form-control">
-                        @foreach (var item in designACDTO.DesignACAccesoEmplazamientoDTO.Tonelaje)
-                        {
-                            <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACAccesoEmplazamientoDTO.TonelajeId)">@item.Nombre</option>
-                        }
-                    </InputSelect>
-                    <label for="radioPosition">Indicar tonelaje</label>
-                </div>
-                <div class="col-3 form-group has-float-label">
-                    <InputSelect @bind-Value="designACDTO.DesignACAccesoEmplazamientoDTO.TipoGruaId" Id="designACDTO.DesignACAccesoEmplazamientoDTO.TipoGruaId" class="form-control">
-                        @foreach (var item in designACDTO.DesignACAccesoEmplazamientoDTO.TipoGrua)
-                        {
-                            <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACAccesoEmplazamientoDTO.TipoGruaId)">@item.Nombre</option>
-                        }
-                    </InputSelect>
-                    <label for="radioPosition">Tipo de Grúa</label>
-                </div>
-                <div class="col-3 form-group has-float-label">
-                    <InputSelect @bind-Value="designACDTO.DesignACAccesoEmplazamientoDTO.AccesoEmplazamientoId" Id="designACDTO.DesignACAccesoEmplazamientoDTO.AccesoEmplazamientoId" class="form-control">
-                        @foreach (var item in designACDTO.DesignACAccesoEmplazamientoDTO.AccesoEmplazamiento)
-                        {
-                            <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACAccesoEmplazamientoDTO.AccesoEmplazamientoId)">@item.Nombre</option>
-                        }
-                    </InputSelect>
-                    <label for="radioPosition">Acceso al emplazamiento/escaleras (solo emplazamiento urbano)</label>
-                </div>
-            </div>
-            <div class="content-form form-row">
-                <div class="col-3 form-group has-float-label">
-                    <InputSelect @bind-Value="designACDTO.DesignACAccesoEmplazamientoDTO.CajetinLlavesId" Id="designACDTO.DesignACAccesoEmplazamientoDTO.CajetinLlavesId" class="form-control">
-                        @foreach (var item in designACDTO.DesignACAccesoEmplazamientoDTO.CajetinLlaves)
-                        {
-                            <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACAccesoEmplazamientoDTO.CajetinLlavesId)">@item.Nombre</option>
-                        }
-                    </InputSelect>
-                    <label for="radioPosition">Cajetín de llaves, llaves, cerrajería</label>
-				</div>
-				<div class="col-3 form-group has-float-label">
-					<InputSelect @bind-Value="designACDTO.DesignACAccesoEmplazamientoDTO.TipoLlaveId" Id="designACDTO.DesignACAccesoEmplazamientoDTO.TipoLlaveId" class="form-control">
-						@foreach (var item in designACDTO.DesignACAccesoEmplazamientoDTO.TipoLlave)
-						{
-							<option value="@item.Id" selected="@(item.Id == designACDTO.DesignACAccesoEmplazamientoDTO.TipoLlaveId)">@item.Nombre</option>
-						}
-					</InputSelect>
-					<label for="radioPosition">Indicar tipo de llave</label>
-				</div>
-                <div class="col-3 form-group has-float-label">
-                    <InputSelect @bind-Value="designACDTO.DesignACAccesoEmplazamientoDTO.AccesoEntradaMaterialId" Id="designACDTO.DesignACAccesoEmplazamientoDTO.AccesoEntradaMaterialId" class="form-control">
-                        @foreach (var item in designACDTO.DesignACAccesoEmplazamientoDTO.AccesoEntradaMaterial)
-                        {
-                            <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACAccesoEmplazamientoDTO.AccesoEntradaMaterialId)">@item.Nombre</option>
-                        }
-                    </InputSelect>
-                    <label for="radioPosition">Acceso para la entrada de material</label>
-                </div>
-                <div class="col-3 form-group has-float-label">
-                    <InputSelect @bind-Value="designACDTO.DesignACAccesoEmplazamientoDTO.TodasLlaveOKId" Id="designACDTO.DesignACAccesoEmplazamientoDTO.TodasLlaveOKId" class="form-control">
-                        @foreach (var item in designACDTO.DesignACAccesoEmplazamientoDTO.TodasLlaveOK)
-                        {
-                            <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACAccesoEmplazamientoDTO.TodasLlaveOKId)">@item.Nombre</option>
-                        }
-                    </InputSelect>
-                    <label for="radioPosition">Todas las llaves están en el bombín y funcionan</label>
-                </div>
-            </div>
-            <div class="content-form form-row">
-                <div class="col-3 form-group has-float-label">
-                    <InputSelect @bind-Value="designACDTO.DesignACAccesoEmplazamientoDTO.AutorizacionEspecialId" Id="designACDTO.DesignACAccesoEmplazamientoDTO.AutorizacionEspecialId" class="form-control">
-                        @foreach (var item in designACDTO.DesignACAccesoEmplazamientoDTO.AutorizacionEspecial)
-                        {
-                            <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACAccesoEmplazamientoDTO.AutorizacionEspecialId)">@item.Nombre</option>
-                        }
-                    </InputSelect>
-                    <label for="radioPosition">Necesidad de autorización especial (Envío fax, etc)</label>
-                </div>
-                <div class="col-3 form-group has-float-label">
-                    <InputSelect @bind-Value="designACDTO.DesignACAccesoEmplazamientoDTO.ContactoPropiedadId" Id="designACDTO.DesignACAccesoEmplazamientoDTO.ContactoPropiedadId" class="form-control">
-                        @foreach (var item in designACDTO.DesignACAccesoEmplazamientoDTO.ContactoPropiedad)
-                        {
-                            <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACAccesoEmplazamientoDTO.ContactoPropiedadId)">@item.Nombre</option>
-                        }
-                    </InputSelect>
-                    <label for="radioPosition">Contacto con la propiedad</label>
-                </div>
-                <div class="col-3 form-group has-float-label">
-                    <InputSelect @bind-Value="designACDTO.DesignACAccesoEmplazamientoDTO.TipoAccesoId" Id="designACDTO.DesignACAccesoEmplazamientoDTO.TipoAccesoId" class="form-control">
-                        @foreach (var item in designACDTO.DesignACAccesoEmplazamientoDTO.TipoAcceso)
-                        {
-                            <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACAccesoEmplazamientoDTO.TipoAccesoId)">@item.Nombre</option>
-                        }
-                    </InputSelect>
-                    <label for="radioPosition">Tipo de acceso</label>
-                </div>
-                <div class="col-3 form-group has-float-label">
-                    <InputSelect @bind-Value="designACDTO.DesignACAccesoEmplazamientoDTO.ProblemasDetectadosId" Id="designACDTO.DesignACAccesoEmplazamientoDTO.ProblemasDetectadosId" class="form-control">
-                        @foreach (var item in designACDTO.DesignACAccesoEmplazamientoDTO.ProblemasDetectados)
-                        {
-                            <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACAccesoEmplazamientoDTO.ProblemasDetectadosId)">@item.Nombre</option>
-                        }
-                    </InputSelect>
-                    <label for="radioPosition">Problemas detectados con la propiedad</label>
-                </div>
-            </div>
-            <div class="content-form form-row">
-                <div class="col-3 form-group has-float-label">
-                    <InputSelect @bind-Value="designACDTO.DesignACAccesoEmplazamientoDTO.TipoRangoHorarioId" Id="designACDTO.DesignACAccesoEmplazamientoDTO.TipoRangoHorarioId" class="form-control">
-                        @foreach (var item in designACDTO.DesignACAccesoEmplazamientoDTO.TipoRangoHorario)
-                        {
-                            <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACAccesoEmplazamientoDTO.TipoRangoHorarioId)">@item.Nombre</option>
-                        }
-                    </InputSelect>
-                    <label for="radioPosition">Rango de horario</label>
-                </div>
-                <div class="col-3 form-group has-float-label">
-                    <InputSelect @bind-Value="designACDTO.DesignACAccesoEmplazamientoDTO.NecesidadAlpinistaId" Id="designACDTO.DesignACAccesoEmplazamientoDTO.NecesidadAlpinistaId" class="form-control">
-                        @foreach (var item in designACDTO.DesignACAccesoEmplazamientoDTO.NecesidadAlpinista)
-                        {
-                            <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACAccesoEmplazamientoDTO.NecesidadAlpinistaId)">@item.Nombre</option>
-                        }
-                    </InputSelect>
-                    <label for="radioPosition">Se necesita alpinista</label>
-                </div>
-            </div>
-            <div class="content-form form-row">
-                <div class="col-12 form-group has-float-label">
-                    <InputTextArea @bind-Value="designACDTO.DesignACAccesoEmplazamientoDTO.Comentarios" rows="5" class="form-control">
-                    </InputTextArea>
-                    <label for="radioPosition">Comentarios</label>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="card card-custom card-compact">
-        <div class="card-title">
-            <div class="col-md-8 pl-0">Fechas replanteo</div>
-        </div>
-        <div class="card-content">
-            <div class="content-form form-row">
-                <div class="col-4 form-group has-float-label">
-                    <InputDate @bind-Value="designACDTO.DesignACDatosDTO.FechaVisita" class="form-control">
-                    </InputDate>
-                    <label for="radioPosition">Fecha visita</label>
-                </div>
-                <div class="col-4 form-group has-float-label">
-                    <InputDate @bind-Value="designACDTO.DesignACDatosDTO.FechaUltimoDiseno" class="form-control">
-                    </InputDate>
-                    <label for="radioPosition">Fecha último diseño</label>
-                </div>
-                <div class="col-4 form-group has-float-label">
-                    <InputDate @bind-Value="designACDTO.DesignACDatosDTO.FechaUltimoDisenoAceptado" class="form-control">
-                    </InputDate>
-                    <label for="radioPosition">Fecha último diseño aceptado</label>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="card card-custom card-compact">
-        <div class="card-title">
-            <div class="col-md-8 pl-0">Comentarios de instalación</div>
-        </div>
-        <div class="card-content">
-            <div class="content-form form-row">
-                <div class="col-4 form-group has-float-label">
-                    <InputSelect @bind-Value="designACDTO.DesignACDatosDTO.ActuacionTorresId" Id="designACDTO.DesignACDatosDTO.ActuacionTorresId" class="form-control">
-                        @foreach (var item in designACDTO.DesignACDatosDTO.ActuacionTorres)
-                        {
-                            <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACDatosDTO.ActuacionTorresId)">@item.Nombre</option>
-                        }
-                    </InputSelect>
-                    <label for="radioPosition">Actuación en torres y/o mástiles a más de 2m de altura (*)Se excluye trabajos en tejados, azoteas, fachadas y/o verticales</label>
-                </div>
-			</div>
-			<div class="content-form form-row">
-                <div class="pl-0 mt-1 ml-1">
-                    <strong>Emplazamiento Telxius</strong>
-                    <button type="button" class="ml-2 btn primary">Ayuda</button>
-                </div>
-			</div>
-            <div class="content-form form-row">
-                <div class="col-1">
-                    <InputCheckbox @bind-Value="designACDTO.DesignACDatosDTO.SinObra" class="form-check-input"></InputCheckbox>
-                    <label class="form-check-label">Sin Obra</label>
-                </div>
-                <div class="col-1">
-                    <InputCheckbox @bind-Value="designACDTO.DesignACDatosDTO.Sustancial" class="form-check-input"></InputCheckbox>
-                    <label class="form-check-label">Sustancial</label>
-                </div>
-                <div class="col-1">
-                    <InputCheckbox @bind-Value="designACDTO.DesignACDatosDTO.NoSustancial" class="form-check-input"></InputCheckbox>
-                    <label class="form-check-label">No sustancial</label>
-                </div>
-            </div>
-            <br />
-            <div class="content-form form-row">
-                <div class="col-12 form-group has-float-label">
-                    <InputTextArea @bind-Value="designACDTO.DesignACDatosDTO.ComentariosTelxius" rows="5" class="form-control">
-                    </InputTextArea>
-                    <label for="radioPosition">Comentarios Telxius</label>
-                </div>
-            </div>
-            <div class="content-form form-row">
-                <div class="pl-0 mt-1 ml-2">
-                    <strong>Emplazamiento Cellnex</strong>
-                </div>
-            </div>
-            <br />
-            <div class="content-form form-row">
-                <div class="col-4 form-group has-float-label">
-                    <InputSelect @bind-Value="designACDTO.DesignACDatosDTO.NecesarioAdecuacionId" Id="designACDTO.DesignACDatosDTO.NecesarioAdecuacionId" class="form-control">
-                        @foreach (var item in designACDTO.DesignACDatosDTO.NecesarioAdecuacion)
-                        {
-                            <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACDatosDTO.NecesarioAdecuacionId)">@item.Nombre</option>
-                        }
-                    </InputSelect>
-                    <label for="radioPosition">Necesario adecuación</label>
-                </div>
-            </div>
-            <div class="content-form form-row">
-                <div class="col-12 form-group has-float-label">
-                    <InputTextArea @bind-Value="designACDTO.DesignACDatosDTO.ObservacionesAdecuacion" rows="5" class="form-control">
-                    </InputTextArea>
-                    <label for="radioPosition">Adecuaciones Necesarias</label>
-                </div>
-            </div>
-            <div class="content-form form-row">
-                <div class="pl-0 mt-1 ml-1">
-                    DESPLAZAMIENTO, TRASLADO, REINSTALACIÓN DE EQUIPOS ,UTILIZACIÓN DE NUEVAS HUELLASY OTROS.
-                </div>
-            </div>
-            <div class="content-form form-row">
-                <div class="col-12 form-group has-float-label">
-                    <InputTextArea @bind-Value="designACDTO.DesignACDatosDTO.RBS" rows="5" class="form-control">
-                    </InputTextArea>
-                    <label for="radioPosition">RBS/Distribución equipos. La distribución de los equipos radio, nuevo HW o HW reutilizado está reflejado en el apartado 5.3.2</label>
-                </div>
-            </div>
-            <div class="content-form form-row">
-                <div class="col-12 form-group has-float-label">
-                    <InputTextArea @bind-Value="designACDTO.DesignACDatosDTO.SSRR" rows="5" class="form-control">
-                    </InputTextArea>
-                    <label for="radioPosition">Sistema Radiante</label>
-                </div>
-            </div>
-            <div class="content-form form-row">
-                <div class="col-12 form-group has-float-label">
-                    <InputTextArea @bind-Value="designACDTO.DesignACDatosDTO.Energia" rows="5" class="form-control">
-                    </InputTextArea>
-                    <label for="radioPosition">Energía/Suministro de Energía. Se detallan los equipos instalados de fuerza además de los componentes adicionales como disyuntores o reconectadoras</label>
-                </div>
-            </div>
-            <div class="content-form form-row">
-                <div class="col-12 form-group has-float-label">
-                    <InputTextArea @bind-Value="designACDTO.DesignACDatosDTO.Equipo" rows="5" class="form-control">
-                    </InputTextArea>
-                    <label for="radioPosition">Equipos a desmontar</label>
-                </div>
-            </div>
-            <div class="content-form form-row">
-                <div class="col-12 form-group has-float-label">
-                    <InputTextArea @bind-Value="designACDTO.DesignACDatosDTO.Otro" rows="5" class="form-control">
-                    </InputTextArea>
-                    <label for="radioPosition">Otros</label>
-                </div>
-            </div>
-            <div class="content-form form-row">
-                <div class="col-12 form-group has-float-label">
-                    <InputTextArea @bind-Value="designACDTO.DesignACDatosDTO.TomaTierra" rows="5" class="form-control">
-                    </InputTextArea>
-                    <label for="radioPosition">Toma de tierra. Se realiza una descripción de las conexiones realizadas y se indica las secciones de tierra utilizadas</label>
-                </div>
-            </div>
-            <div class="content-form form-row">
-                <div class="col-12 form-group has-float-label">
-                    <InputTextArea @bind-Value="designACDTO.DesignACDatosDTO.Repartidor" rows="5" class="form-control">
-                    </InputTextArea>
-                    <label for="radioPosition">Repartidor Digital. Se debe realizar una descripción indicando el tipo de cableado utilizado así como las interconexiones realizadas en el repartidor.</label>
-                </div>
-            </div>
-            <div class="content-form form-row">
-                <div class="col-12 form-group has-float-label">
-                    <InputTextArea @bind-Value="designACDTO.DesignACDatosDTO.AlarmasExternas" rows="5" class="form-control">
-                    </InputTextArea>
-                    <label for="radioPosition">Alarmas Externas</label>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="card card-custom card-compact">
-        <div class="card-title">
-            <div class="col-md-8 pl-0">Radio Summary</div>
-        </div>
-        <div class="card-content">
-            <div class="content-form form-row">
-                <div class="pl-0 mt-1 ml-1">
-                    <strong>Antenas y Pasivos</strong>
-                </div>
-            </div>
-            <div class="content-form form-row">
-                <div class="col-12 form-group has-float-label">
-                    <InputTextArea @bind-Value="designACDTO.DesignACDatosDTO.AntenasPasivosComentarios" rows="5" class="form-control">
-                    </InputTextArea>
-                    <label for="radioPosition">Comentarios</label>
-                </div>
-                <div class="col-12 form-group has-float-label">
-                    <InputTextArea @bind-Value="designACDTO.DesignACDatosDTO.AntenasPasivosAcciones" rows="5" class="form-control">
-                    </InputTextArea>
-                    <label for="radioPosition">Acciones</label>
-                </div>
-            </div>
-            <div class="content-form form-row">
-                <div class="pl-0 mt-1 ml-1">
-                    <strong>Alimentación</strong>
-                </div>
-            </div>
-            <div class="content-form form-row">
-                <div class="col-12 form-group has-float-label">
-                    <InputTextArea @bind-Value="designACDTO.DesignACDatosDTO.AlimentacionComentarios" rows="5" class="form-control">
-                    </InputTextArea>
-                    <label for="radioPosition">Comentarios</label>
-                </div>
-                <div class="col-12 form-group has-float-label">
-                    <InputTextArea @bind-Value="designACDTO.DesignACDatosDTO.AlimentacionAcciones" rows="5" class="form-control">
-                    </InputTextArea>
-                    <label for="radioPosition">Acciones</label>
-                </div>
-            </div>
-            <div class="content-form form-row">
-                <div class="pl-0 mt-1 ml-1">
-                    <strong>TCU</strong>
-                </div>
-            </div>
-            <div class="content-form form-row">
-                <div class="col-12 form-group has-float-label">
-                    <InputTextArea @bind-Value="designACDTO.DesignACDatosDTO.TCUComentarios" rows="5" class="form-control">
-                    </InputTextArea>
-                    <label for="radioPosition">Comentarios</label>
-                </div>
-            </div>
-            <div class="content-form form-row">
-                <div class="pl-0 mt-1 ml-1">
-                    <strong>Tranmisión</strong>
-                </div>
-            </div>
-            <div class="content-form form-row">
-                <div class="col-12 form-group has-float-label">
-                    <InputTextArea @bind-Value="designACDTO.DesignACDatosDTO.TXComentarios" rows="5" class="form-control">
-                    </InputTextArea>
-                    <label for="radioPosition">Comentarios (NOTA: Indicar siempre tipo de transmisión para la interconexión entre DUW y la TCU(Conexión eléctrica o conexión óptica). Ejemplo: Conexión entre la DUW31 y la TCU02 será por fibra óptica)</label>
-                </div>
-            </div>
-            <div class="content-form form-row">
-                <div class="tabs col-12">
-                    <div class="tab-button-outer">
-                        <ul class="nav nav-tabs" id="myTab">
-                            <li class="nav-item col-1"><a class="nav-link text-center @(_activeRSL800 ? "active" : "")" @onclick=@(() => SelectTab("L800"))>LTE 800</a></li>
-                            <li class="nav-item col-1"><a class="nav-link text-center @(_activeRSG900 ? "active" : "")" @onclick=@(() => SelectTab("G900"))>GSM 900</a></li>
-                            <li class="nav-item col-1"><a class="nav-link text-center @(_activeRSU900 ? "active" : "")" @onclick=@(() => SelectTab("U900"))>UMTS 900</a></li>
-                            <li class="nav-item col-1"><a class="nav-link text-center @(_activeRSL900 ? "active" : "")" @onclick=@(() => SelectTab("L900"))>LTE 900</a></li>
-                            <li class="nav-item col-1"><a class="nav-link text-center @(_activeRSG1800 ? "active" : "")" @onclick=@(() => SelectTab("G1800"))>GSM 1800</a></li>
-                            <li class="nav-item col-1"><a class="nav-link text-center @(_activeRSL1800 ? "active" : "")" @onclick=@(() => SelectTab("L1800"))>LTE 1800</a></li>
-                            <li class="nav-item col-1"><a class="nav-link text-center @(_activeRSU2100 ? "active" : "")" @onclick=@(() => SelectTab("U2100"))>UMTS 2100</a></li>
-                            <li class="nav-item col-1"><a class="nav-link text-center @(_activeRSL2100 ? "active" : "")" @onclick=@(() => SelectTab("L2100"))>LTE 2100</a></li>
-                            <li class="nav-item col-1"><a class="nav-link text-center @(_activeRSL2600 ? "active" : "")" @onclick=@(() => SelectTab("L2600"))>LTE 2600</a></li>
-                            <li class="nav-item col-1"><a class="nav-link text-center @(_activeRSL3500 ? "active" : "")" @onclick=@(() => SelectTab("L3500"))>LTE 3500</a></li>
-                            <li class="nav-item col-1"><a class="nav-link text-center @(_activeRSNR3600 ? "active" : "")" @onclick=@(() => SelectTab("NR3600"))>NR 3600</a></li>
-                            <li class="nav-item col-1"><a class="nav-link text-center @(_activeRSESS700 ? "active" : "")" @onclick=@(() => SelectTab("ESS700"))>ESS 700</a></li>
-                        </ul>
+            <div class="card-content">
+                <div class="content-form form-row">
+                    <div class="col-3 form-group has-float-label">
+                        <InputSelect @bind-Value="designACDTO.DesignACTipoEmplazamientoDTO.TipoEstacionId" Id="designACDTO.DesignACSiteTypeDTO.StationId" class="form-control">
+                            @foreach (var item in designACDTO.DesignACTipoEmplazamientoDTO.TipoEstacion)
+                            {
+                                <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACTipoEmplazamientoDTO.TipoEstacionId)">@item.Nombre</option>
+                            }
+                        </InputSelect>
+                        <label for="radioPosition">Estación</label>
                     </div>
-                    <div class="tab-content">
-                        <div id="tabL800" style="display: @(_activeRSL800 ? "block" : "none")">
-                            <div class="form-group row mt-4">
-                                <div class="col-12 form-group has-float-label">
-                                    <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioL800_DTO.Comentarios" rows="5" class="form-control">
-                                    </InputTextArea>
-                                    <label for="radioPosition">Comentarios</label>
-                                </div>
-                                <div class="col-12 form-group has-float-label">
-                                    <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioL800_DTO.Necesita" rows="5" class="form-control">
-                                    </InputTextArea>
-                                    <label for="radioPosition">Necesita</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="tabG900" style="display: @(_activeRSG900 ? "block" : "none")">
-                            <div class="form-group row mt-4">
-                                <div class="col-12 form-group has-float-label">
-                                    <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioG900_DTO.Comentarios" rows="5" class="form-control">
-                                    </InputTextArea>
-                                    <label for="radioPosition">Comentarios</label>
-                                </div>
-                                <div class="col-12 form-group has-float-label">
-                                    <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioG900_DTO.Necesita" rows="5" class="form-control">
-                                    </InputTextArea>
-                                    <label for="radioPosition">Necesita</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="tabG900" style="display: @(_activeRSU900 ? "block" : "none")">
-                            <div class="form-group row mt-4">
-                                <div class="col-12 form-group has-float-label">
-                                    <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioU900_DTO.Comentarios" rows="5" class="form-control">
-                                    </InputTextArea>
-                                    <label for="radioPosition">Comentarios</label>
-                                </div>
-                                <div class="col-12 form-group has-float-label">
-                                    <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioU900_DTO.Necesita" rows="5" class="form-control">
-                                    </InputTextArea>
-                                    <label for="radioPosition">Necesita</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="tabG900" style="display: @(_activeRSL900 ? "block" : "none")">
-                            <div class="form-group row mt-4">
-                                <div class="col-12 form-group has-float-label">
-                                    <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioL900_DTO.Comentarios" rows="5" class="form-control">
-                                    </InputTextArea>
-                                    <label for="radioPosition">Comentarios</label>
-                                </div>
-                                <div class="col-12 form-group has-float-label">
-                                    <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioL900_DTO.Necesita" rows="5" class="form-control">
-                                    </InputTextArea>
-                                    <label for="radioPosition">Necesita</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="tabG900" style="display: @(_activeRSG1800 ? "block" : "none")">
-                            <div class="form-group row mt-4">
-                                <div class="col-12 form-group has-float-label">
-                                    <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioG1800_DTO.Comentarios" rows="5" class="form-control">
-                                    </InputTextArea>
-                                    <label for="radioPosition">Comentarios</label>
-                                </div>
-                                <div class="col-12 form-group has-float-label">
-                                    <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioG1800_DTO.Necesita" rows="5" class="form-control">
-                                    </InputTextArea>
-                                    <label for="radioPosition">Necesita</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="tabG900" style="display: @(_activeRSL1800 ? "block" : "none")">
-                            <div class="form-group row mt-4">
-                                <div class="col-12 form-group has-float-label">
-                                    <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioL1800_DTO.Comentarios" rows="5" class="form-control">
-                                    </InputTextArea>
-                                    <label for="radioPosition">Comentarios</label>
-                                </div>
-                                <div class="col-12 form-group has-float-label">
-                                    <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioL1800_DTO.Necesita" rows="5" class="form-control">
-                                    </InputTextArea>
-                                    <label for="radioPosition">Necesita</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="tabG900" style="display: @(_activeRSU2100 ? "block" : "none")">
-                            <div class="form-group row mt-4">
-                                <div class="col-12 form-group has-float-label">
-                                    <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioU2100_DTO.Comentarios" rows="5" class="form-control">
-                                    </InputTextArea>
-                                    <label for="radioPosition">Comentarios</label>
-                                </div>
-                                <div class="col-12 form-group has-float-label">
-                                    <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioU2100_DTO.Necesita" rows="5" class="form-control">
-                                    </InputTextArea>
-                                    <label for="radioPosition">Necesita</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="tabG900" style="display: @(_activeRSL2100 ? "block" : "none")">
-                            <div class="form-group row mt-4">
-                                <div class="col-12 form-group has-float-label">
-                                    <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioL2100_DTO.Comentarios" rows="5" class="form-control">
-                                    </InputTextArea>
-                                    <label for="radioPosition">Comentarios</label>
-                                </div>
-                                <div class="col-12 form-group has-float-label">
-                                    <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioL2100_DTO.Necesita" rows="5" class="form-control">
-                                    </InputTextArea>
-                                    <label for="radioPosition">Necesita</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="tabG900" style="display: @(_activeRSL2600 ? "block" : "none")">
-                            <div class="form-group row mt-4">
-                                <div class="col-12 form-group has-float-label">
-                                    <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioL2600_DTO.Comentarios" rows="5" class="form-control">
-                                    </InputTextArea>
-                                    <label for="radioPosition">Comentarios</label>
-                                </div>
-                                <div class="col-12 form-group has-float-label">
-                                    <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioL2600_DTO.Necesita" rows="5" class="form-control">
-                                    </InputTextArea>
-                                    <label for="radioPosition">Necesita</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="tabG900" style="display: @(_activeRSL3500 ? "block" : "none")">
-                            <div class="form-group row mt-4">
-                                <div class="col-12 form-group has-float-label">
-                                    <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioL3500_DTO.Comentarios" rows="5" class="form-control">
-                                    </InputTextArea>
-                                    <label for="radioPosition">Comentarios</label>
-                                </div>
-                                <div class="col-12 form-group has-float-label">
-                                    <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioL3500_DTO.Necesita" rows="5" class="form-control">
-                                    </InputTextArea>
-                                    <label for="radioPosition">Necesita</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="tabG900" style="display: @(_activeRSNR3600 ? "block" : "none")">
-                            <div class="form-group row mt-4">
-                                <div class="col-12 form-group has-float-label">
-                                    <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioNR3600_DTO.Comentarios" rows="5" class="form-control">
-                                    </InputTextArea>
-                                    <label for="radioPosition">Comentarios</label>
-                                </div>
-                                <div class="col-12 form-group has-float-label">
-                                    <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioNR3600_DTO.Necesita" rows="5" class="form-control">
-                                    </InputTextArea>
-                                    <label for="radioPosition">Necesita</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div id="tabG900" style="display: @(_activeRSESS700 ? "block" : "none")">
-                            <div class="form-group row mt-4">
-                                <div class="col-12 form-group has-float-label">
-                                    <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioESS700_DTO.Comentarios" rows="5" class="form-control">
-                                    </InputTextArea>
-                                    <label for="radioPosition">Comentarios</label>
-                                </div>
-                                <div class="col-12 form-group has-float-label">
-                                    <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioESS700_DTO.Necesita" rows="5" class="form-control">
-                                    </InputTextArea>
-                                    <label for="radioPosition">Necesita</label>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="col-3 form-group has-float-label">
+                        <InputSelect @bind-Value="designACDTO.DesignACTipoEmplazamientoDTO.TipoCasetaId" Id="designACDTO.DesignACSiteTypeDTO.StandId" class="form-control">
+                            @foreach (var item in designACDTO.DesignACTipoEmplazamientoDTO.TipoCaseta)
+                            {
+                                <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACTipoEmplazamientoDTO.TipoCasetaId)">@item.Nombre</option>
+                            }
+                        </InputSelect>
+                        <label for="radioPosition">Tipo de caseta</label>
+                    </div>
+                    <div class="col-3 form-group has-float-label">
+                        <InputSelect @bind-Value="designACDTO.DesignACTipoEmplazamientoDTO.TipoInstalacionExteriorId" Id="designACDTO.DesignACSiteTypeDTO.OutdoorInstallationId" class="form-control">
+                            @foreach (var item in designACDTO.DesignACTipoEmplazamientoDTO.TipoInstalacionExterior)
+                            {
+                                <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACTipoEmplazamientoDTO.TipoInstalacionExteriorId)">@item.Nombre</option>
+                            }
+                        </InputSelect>
+                        <label for="radioPosition">Tipo de instalación</label>
+                    </div>
+                    <div class="col-3 form-group has-float-label">
+                        <InputSelect @bind-Value="designACDTO.DesignACTipoEmplazamientoDTO.TipoPropiertarioEmplazamientoId" Id="designACDTO.DesignACSiteTypeDTO.SiteOwnerId" class="form-control">
+                            @foreach (var item in designACDTO.DesignACTipoEmplazamientoDTO.TipoPropiertarioEmplazamiento)
+                            {
+                                <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACTipoEmplazamientoDTO.TipoPropiertarioEmplazamientoId)">@item.Nombre</option>
+                            }
+                        </InputSelect>
+                        <label for="radioPosition">Propietario del emplazamiento</label>
+                    </div>
+                </div>
+                <div class="content-form form-row">
+                    <div class="col-1">
+                        <InputCheckbox @bind-Value="designACDTO.DesignACTipoEmplazamientoDTO.NotShared" class="form-check-input"></InputCheckbox>
+                        <label class="form-check-label">
+                            No compartido
+                        </label>
+                    </div>
+                    <div class="col-1">
+                        <InputCheckbox @bind-Value="designACDTO.DesignACTipoEmplazamientoDTO.Vodafone" class="form-check-input"></InputCheckbox>
+                        <label class="form-check-label">
+                            Vodafone
+                        </label>
+                    </div>
+                    <div class="col-1">
+                        <InputCheckbox @bind-Value="designACDTO.DesignACTipoEmplazamientoDTO.Orange" class="form-check-input"></InputCheckbox>
+                        <label class="form-check-label">
+                            Orange
+                        </label>
+                    </div>
+                    <div class="col-1">
+                        <InputCheckbox @bind-Value="designACDTO.DesignACTipoEmplazamientoDTO.Telxius" class="form-check-input"></InputCheckbox>
+                        <label class="form-check-label">
+                            Telxius
+                        </label>
+                    </div>
+                    <div class="col-1">
+                        <InputCheckbox @bind-Value="designACDTO.DesignACTipoEmplazamientoDTO.Yoigo" class="form-check-input"></InputCheckbox>
+                        <label class="form-check-label">
+                            Yoigo
+                        </label>
+                    </div>
+                    <div class="col-1">
+                        <InputCheckbox @bind-Value="designACDTO.DesignACTipoEmplazamientoDTO.Adif" class="form-check-input"></InputCheckbox>
+                        <label class="form-check-label">
+                            Adif
+                        </label>
+                    </div>
+                    <div class="col-1">
+                        <InputCheckbox @bind-Value="designACDTO.DesignACTipoEmplazamientoDTO.Cellnex" class="form-check-input"></InputCheckbox>
+                        <label class="form-check-label">
+                            Cellnex
+                        </label>
+                    </div>
+                    <div class="col-1">
+                        <InputCheckbox @bind-Value="designACDTO.DesignACTipoEmplazamientoDTO.Others" class="form-check-input"></InputCheckbox>
+                        <label class="form-check-label">
+                            Otros
+                        </label>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-</EditForm>
+        <div class="card card-custom card-compact">
+            <div class="card-title">
+                <div class="col-md-8 pl-0">Acceso al emplazamiento</div>
+            </div>
+            <div class="card-content">
+                <div class="content-form form-row">
+                    <div class="col-3 form-group has-float-label">
+                        <InputSelect @bind-Value="designACDTO.DesignACAccesoEmplazamientoDTO.CaminoAccesoId" Id="designACDTO.DesignACAccesoEmplazamientoDTO.CaminoAccesoId" class="form-control">
+                            @foreach (var item in designACDTO.DesignACAccesoEmplazamientoDTO.CaminoAcceso)
+                            {
+                                <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACAccesoEmplazamientoDTO.CaminoAccesoId)">@item.Nombre</option>
+                            }
+                        </InputSelect>
+                        <label for="radioPosition">Camino de acceso y acondicionamiento del terreno (Solo emplz. rural)</label>
+                    </div>
+                    <div class="col-1">
+                        <InputCheckbox @bind-Value="designACDTO.DesignACAccesoEmplazamientoDTO.Necesidad4x4" class="form-check-input"></InputCheckbox>
+                        <label class="form-check-label">Necesidad 4X4</label>
+                    </div>
+                </div>
+                <div class="content-form form-row">
+                    <div class="col-3 form-group has-float-label">
+                        <InputSelect @bind-Value="designACDTO.DesignACAccesoEmplazamientoDTO.NecesidadGruaId" Id="designACDTO.DesignACAccesoEmplazamientoDTO.NecesidadGruaId" class="form-control">
+                            @foreach (var item in designACDTO.DesignACAccesoEmplazamientoDTO.NecesidadGrua)
+                            {
+                                <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACAccesoEmplazamientoDTO.NecesidadGruaId)">@item.Nombre</option>
+                            }
+                        </InputSelect>
+                        <label for="radioPosition">Necesidad de Grúa</label>
+                    </div>
+                    <div class="col-3 form-group has-float-label">
+                        <InputSelect @bind-Value="designACDTO.DesignACAccesoEmplazamientoDTO.TonelajeId" Id="designACDTO.DesignACAccesoEmplazamientoDTO.TonelajeId" class="form-control">
+                            @foreach (var item in designACDTO.DesignACAccesoEmplazamientoDTO.Tonelaje)
+                            {
+                                <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACAccesoEmplazamientoDTO.TonelajeId)">@item.Nombre</option>
+                            }
+                        </InputSelect>
+                        <label for="radioPosition">Indicar tonelaje</label>
+                    </div>
+                    <div class="col-3 form-group has-float-label">
+                        <InputSelect @bind-Value="designACDTO.DesignACAccesoEmplazamientoDTO.TipoGruaId" Id="designACDTO.DesignACAccesoEmplazamientoDTO.TipoGruaId" class="form-control">
+                            @foreach (var item in designACDTO.DesignACAccesoEmplazamientoDTO.TipoGrua)
+                            {
+                                <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACAccesoEmplazamientoDTO.TipoGruaId)">@item.Nombre</option>
+                            }
+                        </InputSelect>
+                        <label for="radioPosition">Tipo de Grúa</label>
+                    </div>
+                    <div class="col-3 form-group has-float-label">
+                        <InputSelect @bind-Value="designACDTO.DesignACAccesoEmplazamientoDTO.AccesoEmplazamientoId" Id="designACDTO.DesignACAccesoEmplazamientoDTO.AccesoEmplazamientoId" class="form-control">
+                            @foreach (var item in designACDTO.DesignACAccesoEmplazamientoDTO.AccesoEmplazamiento)
+                            {
+                                <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACAccesoEmplazamientoDTO.AccesoEmplazamientoId)">@item.Nombre</option>
+                            }
+                        </InputSelect>
+                        <label for="radioPosition">Acceso al emplazamiento/escaleras (solo emplazamiento urbano)</label>
+                    </div>
+                </div>
+                <div class="content-form form-row">
+                    <div class="col-3 form-group has-float-label">
+                        <InputSelect @bind-Value="designACDTO.DesignACAccesoEmplazamientoDTO.CajetinLlavesId" Id="designACDTO.DesignACAccesoEmplazamientoDTO.CajetinLlavesId" class="form-control">
+                            @foreach (var item in designACDTO.DesignACAccesoEmplazamientoDTO.CajetinLlaves)
+                            {
+                                <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACAccesoEmplazamientoDTO.CajetinLlavesId)">@item.Nombre</option>
+                            }
+                        </InputSelect>
+                        <label for="radioPosition">Cajetín de llaves, llaves, cerrajería</label>
+				    </div>
+				    <div class="col-3 form-group has-float-label">
+					    <InputSelect @bind-Value="designACDTO.DesignACAccesoEmplazamientoDTO.TipoLlaveId" Id="designACDTO.DesignACAccesoEmplazamientoDTO.TipoLlaveId" class="form-control">
+						    @foreach (var item in designACDTO.DesignACAccesoEmplazamientoDTO.TipoLlave)
+						    {
+							    <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACAccesoEmplazamientoDTO.TipoLlaveId)">@item.Nombre</option>
+						    }
+					    </InputSelect>
+					    <label for="radioPosition">Indicar tipo de llave</label>
+				    </div>
+                    <div class="col-3 form-group has-float-label">
+                        <InputSelect @bind-Value="designACDTO.DesignACAccesoEmplazamientoDTO.AccesoEntradaMaterialId" Id="designACDTO.DesignACAccesoEmplazamientoDTO.AccesoEntradaMaterialId" class="form-control">
+                            @foreach (var item in designACDTO.DesignACAccesoEmplazamientoDTO.AccesoEntradaMaterial)
+                            {
+                                <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACAccesoEmplazamientoDTO.AccesoEntradaMaterialId)">@item.Nombre</option>
+                            }
+                        </InputSelect>
+                        <label for="radioPosition">Acceso para la entrada de material</label>
+                    </div>
+                    <div class="col-3 form-group has-float-label">
+                        <InputSelect @bind-Value="designACDTO.DesignACAccesoEmplazamientoDTO.TodasLlaveOKId" Id="designACDTO.DesignACAccesoEmplazamientoDTO.TodasLlaveOKId" class="form-control">
+                            @foreach (var item in designACDTO.DesignACAccesoEmplazamientoDTO.TodasLlaveOK)
+                            {
+                                <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACAccesoEmplazamientoDTO.TodasLlaveOKId)">@item.Nombre</option>
+                            }
+                        </InputSelect>
+                        <label for="radioPosition">Todas las llaves están en el bombín y funcionan</label>
+                    </div>
+                </div>
+                <div class="content-form form-row">
+                    <div class="col-3 form-group has-float-label">
+                        <InputSelect @bind-Value="designACDTO.DesignACAccesoEmplazamientoDTO.AutorizacionEspecialId" Id="designACDTO.DesignACAccesoEmplazamientoDTO.AutorizacionEspecialId" class="form-control">
+                            @foreach (var item in designACDTO.DesignACAccesoEmplazamientoDTO.AutorizacionEspecial)
+                            {
+                                <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACAccesoEmplazamientoDTO.AutorizacionEspecialId)">@item.Nombre</option>
+                            }
+                        </InputSelect>
+                        <label for="radioPosition">Necesidad de autorización especial (Envío fax, etc)</label>
+                    </div>
+                    <div class="col-3 form-group has-float-label">
+                        <InputSelect @bind-Value="designACDTO.DesignACAccesoEmplazamientoDTO.ContactoPropiedadId" Id="designACDTO.DesignACAccesoEmplazamientoDTO.ContactoPropiedadId" class="form-control">
+                            @foreach (var item in designACDTO.DesignACAccesoEmplazamientoDTO.ContactoPropiedad)
+                            {
+                                <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACAccesoEmplazamientoDTO.ContactoPropiedadId)">@item.Nombre</option>
+                            }
+                        </InputSelect>
+                        <label for="radioPosition">Contacto con la propiedad</label>
+                    </div>
+                    <div class="col-3 form-group has-float-label">
+                        <InputSelect @bind-Value="designACDTO.DesignACAccesoEmplazamientoDTO.TipoAccesoId" Id="designACDTO.DesignACAccesoEmplazamientoDTO.TipoAccesoId" class="form-control">
+                            @foreach (var item in designACDTO.DesignACAccesoEmplazamientoDTO.TipoAcceso)
+                            {
+                                <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACAccesoEmplazamientoDTO.TipoAccesoId)">@item.Nombre</option>
+                            }
+                        </InputSelect>
+                        <label for="radioPosition">Tipo de acceso</label>
+                    </div>
+                    <div class="col-3 form-group has-float-label">
+                        <InputSelect @bind-Value="designACDTO.DesignACAccesoEmplazamientoDTO.ProblemasDetectadosId" Id="designACDTO.DesignACAccesoEmplazamientoDTO.ProblemasDetectadosId" class="form-control">
+                            @foreach (var item in designACDTO.DesignACAccesoEmplazamientoDTO.ProblemasDetectados)
+                            {
+                                <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACAccesoEmplazamientoDTO.ProblemasDetectadosId)">@item.Nombre</option>
+                            }
+                        </InputSelect>
+                        <label for="radioPosition">Problemas detectados con la propiedad</label>
+                    </div>
+                </div>
+                <div class="content-form form-row">
+                    <div class="col-3 form-group has-float-label">
+                        <InputSelect @bind-Value="designACDTO.DesignACAccesoEmplazamientoDTO.TipoRangoHorarioId" Id="designACDTO.DesignACAccesoEmplazamientoDTO.TipoRangoHorarioId" class="form-control">
+                            @foreach (var item in designACDTO.DesignACAccesoEmplazamientoDTO.TipoRangoHorario)
+                            {
+                                <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACAccesoEmplazamientoDTO.TipoRangoHorarioId)">@item.Nombre</option>
+                            }
+                        </InputSelect>
+                        <label for="radioPosition">Rango de horario</label>
+                    </div>
+                    <div class="col-3 form-group has-float-label">
+                        <InputSelect @bind-Value="designACDTO.DesignACAccesoEmplazamientoDTO.NecesidadAlpinistaId" Id="designACDTO.DesignACAccesoEmplazamientoDTO.NecesidadAlpinistaId" class="form-control">
+                            @foreach (var item in designACDTO.DesignACAccesoEmplazamientoDTO.NecesidadAlpinista)
+                            {
+                                <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACAccesoEmplazamientoDTO.NecesidadAlpinistaId)">@item.Nombre</option>
+                            }
+                        </InputSelect>
+                        <label for="radioPosition">Se necesita alpinista</label>
+                    </div>
+                </div>
+                <div class="content-form form-row">
+                    <div class="col-12 form-group has-float-label">
+                        <InputTextArea @bind-Value="designACDTO.DesignACAccesoEmplazamientoDTO.Comentarios" rows="5" class="form-control">
+                        </InputTextArea>
+                        <label for="radioPosition">Comentarios</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card card-custom card-compact">
+            <div class="card-title">
+                <div class="col-md-8 pl-0">Fechas replanteo</div>
+            </div>
+            <div class="card-content">
+                <div class="content-form form-row">
+                    <div class="col-4 form-group has-float-label">
+                        <InputDate @bind-Value="designACDTO.DesignACDatosDTO.FechaVisita" class="form-control">
+                        </InputDate>
+                        <label for="radioPosition">Fecha visita</label>
+                    </div>
+                    <div class="col-4 form-group has-float-label">
+                        <InputDate @bind-Value="designACDTO.DesignACDatosDTO.FechaUltimoDiseno" class="form-control">
+                        </InputDate>
+                        <label for="radioPosition">Fecha último diseño</label>
+                    </div>
+                    <div class="col-4 form-group has-float-label">
+                        <InputDate @bind-Value="designACDTO.DesignACDatosDTO.FechaUltimoDisenoAceptado" class="form-control">
+                        </InputDate>
+                        <label for="radioPosition">Fecha último diseño aceptado</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card card-custom card-compact">
+            <div class="card-title">
+                <div class="col-md-8 pl-0">Comentarios de instalación</div>
+            </div>
+            <div class="card-content">
+                <div class="content-form form-row">
+                    <div class="col-4 form-group has-float-label">
+                        <InputSelect @bind-Value="designACDTO.DesignACDatosDTO.ActuacionTorresId" Id="designACDTO.DesignACDatosDTO.ActuacionTorresId" class="form-control">
+                            @foreach (var item in designACDTO.DesignACDatosDTO.ActuacionTorres)
+                            {
+                                <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACDatosDTO.ActuacionTorresId)">@item.Nombre</option>
+                            }
+                        </InputSelect>
+                        <label for="radioPosition">Actuación en torres y/o mástiles a más de 2m de altura (*)Se excluye trabajos en tejados, azoteas, fachadas y/o verticales</label>
+                    </div>
+			    </div>
+			    <div class="content-form form-row">
+                    <div class="pl-0 mt-1 ml-1">
+                        <strong>Emplazamiento Telxius</strong>
+                        <button type="button" class="ml-2 btn primary">Ayuda</button>
+                    </div>
+			    </div>
+                <div class="content-form form-row">
+                    <div class="col-1">
+                        <InputCheckbox @bind-Value="designACDTO.DesignACDatosDTO.SinObra" class="form-check-input"></InputCheckbox>
+                        <label class="form-check-label">Sin Obra</label>
+                    </div>
+                    <div class="col-1">
+                        <InputCheckbox @bind-Value="designACDTO.DesignACDatosDTO.Sustancial" class="form-check-input"></InputCheckbox>
+                        <label class="form-check-label">Sustancial</label>
+                    </div>
+                    <div class="col-1">
+                        <InputCheckbox @bind-Value="designACDTO.DesignACDatosDTO.NoSustancial" class="form-check-input"></InputCheckbox>
+                        <label class="form-check-label">No sustancial</label>
+                    </div>
+                </div>
+                <br />
+                <div class="content-form form-row">
+                    <div class="col-12 form-group has-float-label">
+                        <InputTextArea @bind-Value="designACDTO.DesignACDatosDTO.ComentariosTelxius" rows="5" class="form-control">
+                        </InputTextArea>
+                        <label for="radioPosition">Comentarios Telxius</label>
+                        @*<ValidationMessage class="text-danger" For="@(() => designACDTO.DesignACDatosDTO.ComentariosTelxius)" />*@
+                    </div>
+                </div>
+                <div class="content-form form-row">
+                    <div class="pl-0 mt-1 ml-2">
+                        <strong>Emplazamiento Cellnex</strong>
+                    </div>
+                </div>
+                <br />
+                <div class="content-form form-row">
+                    <div class="col-4 form-group has-float-label">
+                        <InputSelect @bind-Value="designACDTO.DesignACDatosDTO.NecesarioAdecuacionId" Id="designACDTO.DesignACDatosDTO.NecesarioAdecuacionId" class="form-control">
+                            @foreach (var item in designACDTO.DesignACDatosDTO.NecesarioAdecuacion)
+                            {
+                                <option value="@item.Id" selected="@(item.Id == designACDTO.DesignACDatosDTO.NecesarioAdecuacionId)">@item.Nombre</option>
+                            }
+                        </InputSelect>
+                        <label for="radioPosition">Necesario adecuación</label>
+                    </div>
+                </div>
+                <div class="content-form form-row">
+                    <div class="col-12 form-group has-float-label">
+                        <InputTextArea @bind-Value="designACDTO.DesignACDatosDTO.ObservacionesAdecuacion" rows="5" class="form-control">
+                        </InputTextArea>
+                        <label for="radioPosition">Adecuaciones Necesarias</label>
+                    </div>
+                </div>
+                <div class="content-form form-row">
+                    <div class="pl-0 mt-1 ml-1">
+                        DESPLAZAMIENTO, TRASLADO, REINSTALACIÓN DE EQUIPOS ,UTILIZACIÓN DE NUEVAS HUELLASY OTROS.
+                    </div>
+                </div>
+                <div class="content-form form-row">
+                    <div class="col-12 form-group has-float-label">
+                        <InputTextArea @bind-Value="designACDTO.DesignACDatosDTO.RBS" rows="5" class="form-control">
+                        </InputTextArea>
+                        <label for="radioPosition">RBS/Distribución equipos. La distribución de los equipos radio, nuevo HW o HW reutilizado está reflejado en el apartado 5.3.2</label>
+                    </div>
+                </div>
+                <div class="content-form form-row">
+                    <div class="col-12 form-group has-float-label">
+                        <InputTextArea @bind-Value="designACDTO.DesignACDatosDTO.SSRR" rows="5" class="form-control">
+                        </InputTextArea>
+                        <label for="radioPosition">Sistema Radiante</label>
+                    </div>
+                </div>
+                <div class="content-form form-row">
+                    <div class="col-12 form-group has-float-label">
+                        <InputTextArea @bind-Value="designACDTO.DesignACDatosDTO.Energia" rows="5" class="form-control">
+                        </InputTextArea>
+                        <label for="radioPosition">Energía/Suministro de Energía. Se detallan los equipos instalados de fuerza además de los componentes adicionales como disyuntores o reconectadoras</label>
+                    </div>
+                </div>
+                <div class="content-form form-row">
+                    <div class="col-12 form-group has-float-label">
+                        <InputTextArea @bind-Value="designACDTO.DesignACDatosDTO.Equipo" rows="5" class="form-control">
+                        </InputTextArea>
+                        <label for="radioPosition">Equipos a desmontar</label>
+                    </div>
+                </div>
+                <div class="content-form form-row">
+                    <div class="col-12 form-group has-float-label">
+                        <InputTextArea @bind-Value="designACDTO.DesignACDatosDTO.Otro" rows="5" class="form-control">
+                        </InputTextArea>
+                        <label for="radioPosition">Otros</label>
+                    </div>
+                </div>
+                <div class="content-form form-row">
+                    <div class="col-12 form-group has-float-label">
+                        <InputTextArea @bind-Value="designACDTO.DesignACDatosDTO.TomaTierra" rows="5" class="form-control">
+                        </InputTextArea>
+                        <label for="radioPosition">Toma de tierra. Se realiza una descripción de las conexiones realizadas y se indica las secciones de tierra utilizadas</label>
+                    </div>
+                </div>
+                <div class="content-form form-row">
+                    <div class="col-12 form-group has-float-label">
+                        <InputTextArea @bind-Value="designACDTO.DesignACDatosDTO.Repartidor" rows="5" class="form-control">
+                        </InputTextArea>
+                        <label for="radioPosition">Repartidor Digital. Se debe realizar una descripción indicando el tipo de cableado utilizado así como las interconexiones realizadas en el repartidor.</label>
+                    </div>
+                </div>
+                <div class="content-form form-row">
+                    <div class="col-12 form-group has-float-label">
+                        <InputTextArea @bind-Value="designACDTO.DesignACDatosDTO.AlarmasExternas" rows="5" class="form-control">
+                        </InputTextArea>
+                        <label for="radioPosition">Alarmas Externas</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card card-custom card-compact">
+            <div class="card-title">
+                <div class="col-md-8 pl-0">Radio Summary</div>
+            </div>
+            <div class="card-content">
+                <div class="content-form form-row">
+                    <div class="pl-0 mt-1 ml-1">
+                        <strong>Antenas y Pasivos</strong>
+                    </div>
+                </div>
+                <div class="content-form form-row">
+                    <div class="col-12 form-group has-float-label">
+                        <InputTextArea @bind-Value="designACDTO.DesignACDatosDTO.AntenasPasivosComentarios" rows="5" class="form-control">
+                        </InputTextArea>
+                        <label for="radioPosition">Comentarios</label>
+                    </div>
+                    <div class="col-12 form-group has-float-label">
+                        <InputTextArea @bind-Value="designACDTO.DesignACDatosDTO.AntenasPasivosAcciones" rows="5" class="form-control">
+                        </InputTextArea>
+                        <label for="radioPosition">Acciones</label>
+                    </div>
+                </div>
+                <div class="content-form form-row">
+                    <div class="pl-0 mt-1 ml-1">
+                        <strong>Alimentación</strong>
+                    </div>
+                </div>
+                <div class="content-form form-row">
+                    <div class="col-12 form-group has-float-label">
+                        <InputTextArea @bind-Value="designACDTO.DesignACDatosDTO.AlimentacionComentarios" rows="5" class="form-control">
+                        </InputTextArea>
+                        <label for="radioPosition">Comentarios</label>
+                    </div>
+                    <div class="col-12 form-group has-float-label">
+                        <InputTextArea @bind-Value="designACDTO.DesignACDatosDTO.AlimentacionAcciones" rows="5" class="form-control">
+                        </InputTextArea>
+                        <label for="radioPosition">Acciones</label>
+                    </div>
+                </div>
+                <div class="content-form form-row">
+                    <div class="pl-0 mt-1 ml-1">
+                        <strong>TCU</strong>
+                    </div>
+                </div>
+                <div class="content-form form-row">
+                    <div class="col-12 form-group has-float-label">
+                        <InputTextArea @bind-Value="designACDTO.DesignACDatosDTO.TCUComentarios" rows="5" class="form-control">
+                        </InputTextArea>
+                        <label for="radioPosition">Comentarios</label>
+                    </div>
+                </div>
+                <div class="content-form form-row">
+                    <div class="pl-0 mt-1 ml-1">
+                        <strong>Tranmisión</strong>
+                    </div>
+                </div>
+                <div class="content-form form-row">
+                    <div class="col-12 form-group has-float-label">
+                        <InputTextArea @bind-Value="designACDTO.DesignACDatosDTO.TXComentarios" rows="5" class="form-control">
+                        </InputTextArea>
+                        <label for="radioPosition">Comentarios (NOTA: Indicar siempre tipo de transmisión para la interconexión entre DUW y la TCU(Conexión eléctrica o conexión óptica). Ejemplo: Conexión entre la DUW31 y la TCU02 será por fibra óptica)</label>
+                    </div>
+                </div>
+                <div class="content-form form-row">
+                    <div class="tabs col-12">
+                        <div class="tab-button-outer">
+                            <ul class="nav nav-tabs" id="myTab">
+                                <li class="nav-item col-1"><a class="nav-link text-center @(_activeRSL800 ? "active" : "")" @onclick=@(() => SelectTab("L800"))>LTE 800</a></li>
+                                <li class="nav-item col-1"><a class="nav-link text-center @(_activeRSG900 ? "active" : "")" @onclick=@(() => SelectTab("G900"))>GSM 900</a></li>
+                                <li class="nav-item col-1"><a class="nav-link text-center @(_activeRSU900 ? "active" : "")" @onclick=@(() => SelectTab("U900"))>UMTS 900</a></li>
+                                <li class="nav-item col-1"><a class="nav-link text-center @(_activeRSL900 ? "active" : "")" @onclick=@(() => SelectTab("L900"))>LTE 900</a></li>
+                                <li class="nav-item col-1"><a class="nav-link text-center @(_activeRSG1800 ? "active" : "")" @onclick=@(() => SelectTab("G1800"))>GSM 1800</a></li>
+                                <li class="nav-item col-1"><a class="nav-link text-center @(_activeRSL1800 ? "active" : "")" @onclick=@(() => SelectTab("L1800"))>LTE 1800</a></li>
+                                <li class="nav-item col-1"><a class="nav-link text-center @(_activeRSU2100 ? "active" : "")" @onclick=@(() => SelectTab("U2100"))>UMTS 2100</a></li>
+                                <li class="nav-item col-1"><a class="nav-link text-center @(_activeRSL2100 ? "active" : "")" @onclick=@(() => SelectTab("L2100"))>LTE 2100</a></li>
+                                <li class="nav-item col-1"><a class="nav-link text-center @(_activeRSL2600 ? "active" : "")" @onclick=@(() => SelectTab("L2600"))>LTE 2600</a></li>
+                                <li class="nav-item col-1"><a class="nav-link text-center @(_activeRSL3500 ? "active" : "")" @onclick=@(() => SelectTab("L3500"))>LTE 3500</a></li>
+                                <li class="nav-item col-1"><a class="nav-link text-center @(_activeRSNR3600 ? "active" : "")" @onclick=@(() => SelectTab("NR3600"))>NR 3600</a></li>
+                                <li class="nav-item col-1"><a class="nav-link text-center @(_activeRSESS700 ? "active" : "")" @onclick=@(() => SelectTab("ESS700"))>ESS 700</a></li>
+                            </ul>
+                        </div>
+                        <div class="tab-content">
+                            <div id="tabL800" style="display: @(_activeRSL800 ? "block" : "none")">
+                                <div class="form-group row mt-4">
+                                    <div class="col-12 form-group has-float-label">
+                                        <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioL800_DTO.Comentarios" rows="5" class="form-control">
+                                        </InputTextArea>
+                                        <label for="radioPosition">Comentarios</label>
+                                    </div>
+                                    <div class="col-12 form-group has-float-label">
+                                        <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioL800_DTO.Necesita" rows="5" class="form-control">
+                                        </InputTextArea>
+                                        <label for="radioPosition">Necesita</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tabG900" style="display: @(_activeRSG900 ? "block" : "none")">
+                                <div class="form-group row mt-4">
+                                    <div class="col-12 form-group has-float-label">
+                                        <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioG900_DTO.Comentarios" rows="5" class="form-control">
+                                        </InputTextArea>
+                                        <label for="radioPosition">Comentarios</label>
+                                    </div>
+                                    <div class="col-12 form-group has-float-label">
+                                        <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioG900_DTO.Necesita" rows="5" class="form-control">
+                                        </InputTextArea>
+                                        <label for="radioPosition">Necesita</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tabG900" style="display: @(_activeRSU900 ? "block" : "none")">
+                                <div class="form-group row mt-4">
+                                    <div class="col-12 form-group has-float-label">
+                                        <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioU900_DTO.Comentarios" rows="5" class="form-control">
+                                        </InputTextArea>
+                                        <label for="radioPosition">Comentarios</label>
+                                    </div>
+                                    <div class="col-12 form-group has-float-label">
+                                        <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioU900_DTO.Necesita" rows="5" class="form-control">
+                                        </InputTextArea>
+                                        <label for="radioPosition">Necesita</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tabG900" style="display: @(_activeRSL900 ? "block" : "none")">
+                                <div class="form-group row mt-4">
+                                    <div class="col-12 form-group has-float-label">
+                                        <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioL900_DTO.Comentarios" rows="5" class="form-control">
+                                        </InputTextArea>
+                                        <label for="radioPosition">Comentarios</label>
+                                    </div>
+                                    <div class="col-12 form-group has-float-label">
+                                        <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioL900_DTO.Necesita" rows="5" class="form-control">
+                                        </InputTextArea>
+                                        <label for="radioPosition">Necesita</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tabG900" style="display: @(_activeRSG1800 ? "block" : "none")">
+                                <div class="form-group row mt-4">
+                                    <div class="col-12 form-group has-float-label">
+                                        <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioG1800_DTO.Comentarios" rows="5" class="form-control">
+                                        </InputTextArea>
+                                        <label for="radioPosition">Comentarios</label>
+                                    </div>
+                                    <div class="col-12 form-group has-float-label">
+                                        <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioG1800_DTO.Necesita" rows="5" class="form-control">
+                                        </InputTextArea>
+                                        <label for="radioPosition">Necesita</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tabG900" style="display: @(_activeRSL1800 ? "block" : "none")">
+                                <div class="form-group row mt-4">
+                                    <div class="col-12 form-group has-float-label">
+                                        <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioL1800_DTO.Comentarios" rows="5" class="form-control">
+                                        </InputTextArea>
+                                        <label for="radioPosition">Comentarios</label>
+                                    </div>
+                                    <div class="col-12 form-group has-float-label">
+                                        <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioL1800_DTO.Necesita" rows="5" class="form-control">
+                                        </InputTextArea>
+                                        <label for="radioPosition">Necesita</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tabG900" style="display: @(_activeRSU2100 ? "block" : "none")">
+                                <div class="form-group row mt-4">
+                                    <div class="col-12 form-group has-float-label">
+                                        <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioU2100_DTO.Comentarios" rows="5" class="form-control">
+                                        </InputTextArea>
+                                        <label for="radioPosition">Comentarios</label>
+                                    </div>
+                                    <div class="col-12 form-group has-float-label">
+                                        <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioU2100_DTO.Necesita" rows="5" class="form-control">
+                                        </InputTextArea>
+                                        <label for="radioPosition">Necesita</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tabG900" style="display: @(_activeRSL2100 ? "block" : "none")">
+                                <div class="form-group row mt-4">
+                                    <div class="col-12 form-group has-float-label">
+                                        <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioL2100_DTO.Comentarios" rows="5" class="form-control">
+                                        </InputTextArea>
+                                        <label for="radioPosition">Comentarios</label>
+                                    </div>
+                                    <div class="col-12 form-group has-float-label">
+                                        <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioL2100_DTO.Necesita" rows="5" class="form-control">
+                                        </InputTextArea>
+                                        <label for="radioPosition">Necesita</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tabG900" style="display: @(_activeRSL2600 ? "block" : "none")">
+                                <div class="form-group row mt-4">
+                                    <div class="col-12 form-group has-float-label">
+                                        <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioL2600_DTO.Comentarios" rows="5" class="form-control">
+                                        </InputTextArea>
+                                        <label for="radioPosition">Comentarios</label>
+                                    </div>
+                                    <div class="col-12 form-group has-float-label">
+                                        <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioL2600_DTO.Necesita" rows="5" class="form-control">
+                                        </InputTextArea>
+                                        <label for="radioPosition">Necesita</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tabG900" style="display: @(_activeRSL3500 ? "block" : "none")">
+                                <div class="form-group row mt-4">
+                                    <div class="col-12 form-group has-float-label">
+                                        <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioL3500_DTO.Comentarios" rows="5" class="form-control">
+                                        </InputTextArea>
+                                        <label for="radioPosition">Comentarios</label>
+                                    </div>
+                                    <div class="col-12 form-group has-float-label">
+                                        <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioL3500_DTO.Necesita" rows="5" class="form-control">
+                                        </InputTextArea>
+                                        <label for="radioPosition">Necesita</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tabG900" style="display: @(_activeRSNR3600 ? "block" : "none")">
+                                <div class="form-group row mt-4">
+                                    <div class="col-12 form-group has-float-label">
+                                        <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioNR3600_DTO.Comentarios" rows="5" class="form-control">
+                                        </InputTextArea>
+                                        <label for="radioPosition">Comentarios</label>
+                                    </div>
+                                    <div class="col-12 form-group has-float-label">
+                                        <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioNR3600_DTO.Necesita" rows="5" class="form-control">
+                                        </InputTextArea>
+                                        <label for="radioPosition">Necesita</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="tabG900" style="display: @(_activeRSESS700 ? "block" : "none")">
+                                <div class="form-group row mt-4">
+                                    <div class="col-12 form-group has-float-label">
+                                        <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioESS700_DTO.Comentarios" rows="5" class="form-control">
+                                        </InputTextArea>
+                                        <label for="radioPosition">Comentarios</label>
+                                    </div>
+                                    <div class="col-12 form-group has-float-label">
+                                        <InputTextArea @bind-Value="designACDTO.DesignACResumenRadioESS700_DTO.Necesita" rows="5" class="form-control">
+                                        </InputTextArea>
+                                        <label for="radioPosition">Necesita</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </EditForm>
+}
 
 @code {
     private string _id_replanteo;
@@ -711,11 +716,10 @@
     private string _proyecto;
     private string _pais;
     private string _seccion;
-
     private string _id_usuario;
     private InitialRequest _initialRequest;
 
-    public DesignACDTO designACDTO = new DesignACDTO();
+    private DesignACDTO? designACDTO;
     public bool IsLoading;
 
     private bool _activeRSL800 = true;
@@ -733,6 +737,7 @@
 
     protected override async Task OnInitializedAsync()
     {
+
         _id_replanteo = await sessionStorage.GetItemAsStringAsync("AteneaId");
         _site = await sessionStorage.GetItemAsStringAsync("AteneaSite");
         _usuario = await sessionStorage.GetItemAsStringAsync("AteneaUsuario");
@@ -766,30 +771,19 @@
 
     private async Task CheckInitialAsync()
     {
-        try
+        ShowLoading();
+        var responseHttp = await repository.Post<InitialRequest, DesignAC>("/api/core/InitialChecks", _initialRequest);
+        if (responseHttp.Error)
         {
-            IsLoading = true;
-            StateHasChanged();
-            var responseHttp = await repository.Post<InitialRequest, DesignAC>("/api/core/InitialChecks", _initialRequest);
-            if (responseHttp.Error)
-            {
-                var message = await responseHttp.GetErrorMessageAsync();
-                IsLoading = false;
-                StateHasChanged();
-                return;
-            }
-
-            _id_usuario = responseHttp.Response.Usuario.Id.ToString();
-            await sessionStorage.SetItemAsStringAsync("IdUsuarioMateriales", _id_usuario);
-
-            await LoadAditionalCommentsAsync(responseHttp.Response.Id);
+            var message = await responseHttp.GetErrorMessageAsync();
+            HideLoading();
+            return;
         }
-        catch (Exception ex) { }
-        finally
-        {
-            IsLoading = false;
-            StateHasChanged();
-        }
+
+        _id_usuario = responseHttp.Response!.Usuario.Id.ToString();
+        await sessionStorage.SetItemAsStringAsync("IdUsuarioMateriales", _id_usuario);
+        await LoadAditionalCommentsAsync(responseHttp.Response.Id);
+        HideLoading();
     }
 
     private async Task LoadAditionalCommentsAsync(int id)
@@ -866,17 +860,24 @@
 
     private async Task SaveChangesAsync()
     {
-        IsLoading = true;
-        StateHasChanged();
-
+        ShowLoading();
         var responseHttp = await repository.Post("/api/designac/", designACDTO);
         if (responseHttp.Error)
         {
             var message = await responseHttp.GetErrorMessageAsync();
+            HideLoading();
             return;
         }
+        HideLoading();
+    }
 
+    private void ShowLoading()
+    {
+        IsLoading = true;
+    }
+
+    private void HideLoading()
+    {
         IsLoading = false;
-        StateHasChanged();
     }
 }

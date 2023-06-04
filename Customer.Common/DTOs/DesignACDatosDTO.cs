@@ -1,6 +1,7 @@
 ﻿using Customer.Common.Entities;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,7 @@ namespace Customer.Common.DTOs
 
         public bool NoSustancial { get; set; }
 
+        [MaxLength(75, ErrorMessage = "El campo supera los {0} caractreres.")]
         public string ComentariosTelxius { get; set; }
 
         public int? NecesarioAdecuacionId { get; set; }
